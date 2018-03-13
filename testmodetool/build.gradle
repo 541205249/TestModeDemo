@@ -22,4 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
 }

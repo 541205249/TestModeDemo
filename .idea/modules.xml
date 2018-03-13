@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TestModeDemo.iml" filepath="$PROJECT_DIR$/.idea/TestModeDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestModeDemo.iml" filepath="$PROJECT_DIR$/TestModeDemo.iml" />
+      <module fileurl="file://E:\Freedom_workspaces\TestModeDemo\.idea\TestModeDemo.iml" filepath="E:\Freedom_workspaces\TestModeDemo\.idea\TestModeDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Freedom_workspaces\TestModeDemo\app\app.iml" filepath="E:\Freedom_workspaces\TestModeDemo\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/testmodetool/testmodetool.iml" filepath="$PROJECT_DIR$/testmodetool/testmodetool.iml" />
+      <module fileurl="file://E:\Freedom_workspaces\TestModeDemo\testmodetool\testmodetool.iml" filepath="E:\Freedom_workspaces\TestModeDemo\testmodetool\testmodetool.iml" />
     </modules>
   </component>
 </project>
