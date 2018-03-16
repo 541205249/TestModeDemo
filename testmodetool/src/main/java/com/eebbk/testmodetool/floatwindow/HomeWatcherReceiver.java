@@ -20,7 +20,7 @@ public class HomeWatcherReceiver extends BroadcastReceiver {
             if (SYSTEM_DIALOG_FROM_HOME_KEY.equals(from)) { //短按Home键
                 Log.i(TAG, "Home Key");
                 //按home键会直接关闭悬浮窗
-                FloatWindowController.getInstance().close();
+//                FloatWindowController.getInstance().close();
             } else if (SYSTEM_DIALOG_FROM_RECENT_APPS.equals(from)) { //长按Home键或是Activity切换键
                 Log.i(TAG, "long press home key or activity switch");
             } else if (SYSTEM_DIALOG_FROM_LOCK.equals(from)) { //锁屏操作
