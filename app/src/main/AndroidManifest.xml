@@ -14,7 +14,7 @@
         </activity>
         <receiver android:name=".TestBroadCast">
             <intent-filter>
-                <action android:name="com.eebbk.test.aoptest"/>
+                <action android:name="com.testmode.action"/>
             </intent-filter>
         </receiver>
     </application>

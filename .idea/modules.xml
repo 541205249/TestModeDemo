@@ -8,6 +8,7 @@
       <module fileurl="file://E:\Freedom_workspaces\TestModeDemo\app\app.iml" filepath="E:\Freedom_workspaces\TestModeDemo\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/testmodetool/testmodetool.iml" filepath="$PROJECT_DIR$/testmodetool/testmodetool.iml" />
       <module fileurl="file://E:\Freedom_workspaces\TestModeDemo\testmodetool\testmodetool.iml" filepath="E:\Freedom_workspaces\TestModeDemo\testmodetool\testmodetool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tobetestapp/tobetestapp.iml" filepath="$PROJECT_DIR$/tobetestapp/tobetestapp.iml" />
     </modules>
   </component>
 </project>
