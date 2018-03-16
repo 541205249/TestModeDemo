@@ -19,10 +19,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.click1).setOnClickListener(this);
     }
 
+    @CollectElapsedTime(target = "start")
     private void test(){
         Thread t = new Thread(new Runnable() {
-            @CollectElapsedTime(target = "start")
             @Override
+            @CollectElapsedTime(target = "end")
             public void run() {
                 int i = new Random().nextInt(5);
                 try {
