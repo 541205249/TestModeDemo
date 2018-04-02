@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eebbk.testmodetool.R;
@@ -25,8 +26,7 @@ public class FloatLayout extends FrameLayout {
     public FloatLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        View view = LayoutInflater.from(context).inflate(R.layout.float_window_layout, this);
-        testTxt = (TextView) view.findViewById(R.id.test);
+        initView(context);
     }
 
     @Override
@@ -73,4 +73,17 @@ public class FloatLayout extends FrameLayout {
         testTxt.setText(s);
     }
 
+    private void initView(Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.float_window_layout, this);
+        testTxt = view.findViewById(R.id.test);
+
+        final ScrollView contentLayout = view.findViewById(R.id.contentLayout);
+        view.findViewById(R.id.show_view_btn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visibility = contentLayout.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+                contentLayout.setVisibility(visibility);
+            }
+        });
+    }
 }

@@ -2,23 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="500dp"
     android:layout_height="400dp"
-    android:background="#ccffffff"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#cc521911"/>
+    <Button
+        android:id="@+id/show_view_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="展开/收起"/>
 
-    <TextView android:layout_width="wrap_content"
-              android:id="@+id/test"
-              android:textSize="20sp"
-              android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
 
     <ScrollView
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ccffffff">
+        android:layout_height="match_parent" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
-                android:background="#cce6faef">
+                android:background="#cc521911">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -203,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="horizontal"
-                android:background="#cce6faef">
+                android:background="#cc521911">
 
                 <Button
                     android:layout_width="wrap_content"
@@ -221,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
-                android:background="#cce6faef">
+                android:background="#cc521911">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -294,7 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
-                android:background="#cce6faef">
+                android:background="#cc521911">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -395,7 +397,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
-                android:background="#cce6faef">
+                android:background="#cc521911">
 
                 <TextView
                     android:layout_width="wrap_content"

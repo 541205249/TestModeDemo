@@ -21,11 +21,11 @@ import com.eebbk.testmodetool.R;
  * 描述：
  */
 public class CounterView extends LinearLayout implements View.OnClickListener, TextWatcher {
-    public static final int MAX_VALUE = 100;
+    public static final int MAX_VALUE = Integer.MAX_VALUE;
 
-    public static final int MIN_VALUE = 1;
+    public static final int MIN_VALUE = 0;
 
-    private int countValue = 1;//数量
+    private int countValue = 0;//数量
 
     private ImageView ivAdd, ivMinu;
 
@@ -137,7 +137,7 @@ public class CounterView extends LinearLayout implements View.OnClickListener, T
         boolean needUpdate = false;
         if (!TextUtils.isEmpty(s)) {
             countValue = Integer.valueOf(s.toString());
-            if (countValue <= MIN_VALUE) {
+            if (countValue < MIN_VALUE) {
                 countValue = MIN_VALUE;
                 ivMinu.setEnabled(false);
                 ivAdd.setEnabled(true);

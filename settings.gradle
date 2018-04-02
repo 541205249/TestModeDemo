@@ -1,1 +1,1 @@
-include ':app', ':testmodetool', ':tobetestapp'
+include ':app', ':testmodetool'

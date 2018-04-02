@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="testmode.eebbk.com.testmodedemo">
 
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true" android:theme="@style/AppTheme">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -14,7 +17,7 @@
         </activity>
         <receiver android:name=".TestBroadCast">
             <intent-filter>
-                <action android:name="com.testmode.action"/>
+                <action android:name="com.testmode.action.com.eebbk.askhomework" />
             </intent-filter>
         </receiver>
     </application>

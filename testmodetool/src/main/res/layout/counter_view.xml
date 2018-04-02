@@ -6,20 +6,20 @@
 
     <ImageView
         android:id="@+id/iv_count_minus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@drawable/btn_count_minu_selector"
         android:enabled="false" />
 
     <EditText
         android:id="@+id/et_count"
-        android:layout_width="30dp"
-        android:minWidth="30dp"
+        android:layout_width="20dp"
+        android:minWidth="20dp"
         android:maxLength="5"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:gravity="center"
-        android:textSize="18sp"
-        android:text="1"
+        android:textSize="13sp"
+        android:text="0"
         android:inputType="number"
         android:layout_gravity="center_vertical"
         android:background="@null"
@@ -28,8 +28,8 @@
 
     <ImageView
         android:id="@+id/iv_count_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@drawable/btn_count_add_selector" />
 
 </LinearLayout>
