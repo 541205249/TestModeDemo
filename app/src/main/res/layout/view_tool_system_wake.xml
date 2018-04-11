@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tool_system_wake_statistics_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2dp"
+        android:padding="8dp"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/tool_system_wake_black_voice_mistake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加：系统唤醒-黑屏-语音唤醒-误唤醒" />
+
+    <Button
+        android:id="@+id/tool_system_wake_black_gesture_mistake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加：系统唤醒-黑屏-手势唤醒-误唤醒" />
+
+    <Button
+        android:id="@+id/tool_system_wake_lock_voice_mistake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加：系统唤醒-锁屏-语音唤醒-误唤醒" />
+
+    <Button
+        android:id="@+id/tool_system_wake_bright_voice_mistake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加：系统唤醒-亮屏-语音唤醒-误唤醒" />
+
+    <Button
+        android:id="@+id/tool_system_wake_bright_button_mistake_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加：系统唤醒-亮屏-按键唤醒-误唤醒" />
+</LinearLayout>

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">问作业测试模式</string>
+    <string name="log">指标项:%1$s\n\t方法名:%2$s\n\t成功次数:%3$d\n\t失败次数:%4$d\n\t耗时:%5$d\n\t值:%6$f\n\t描述:%7$s\n\t时间:%8$s</string>
+    <string name="system_wake_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n误唤醒次数:%4$d\n唤醒成功率:%5$f%%\n误唤醒率:%6$f%%\n系统处理平均耗时:%7$d\n应用响应平均耗时:%8$d\n系统唤醒平均总耗时:%9$d</string>
+    <string name="app_wake_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n误唤醒次数:%4$d\n唤醒成功率:%5$f%%\n误唤醒率:%6$f%%\n应用内唤醒平均耗时:%7$d</string>
+    <string name="audio_statistics">历史最低分贝:%1$f\n历史最高分贝:%2$f\n平均分贝:%3$f\n平均采样率:%4$f%%</string>
+    <string name="speech_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n语音识别率:%4$f%%\n语音平均时长:%5$d\n语音即时转换平均耗时:%6$d</string>
+    <string name="content_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n内容准确率:%4$f%%</string>
+    <string name="display_statistics">APP页面展示平均耗时:%1$d</string>
+    <string name="helper_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n其他应用响应平均耗时:%4$d\n空中传输平均耗时:%5$d</string>
+    <string name="semantic_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n语义理解正确率:%4$f%%\n语义理解平均耗时:%5$d\n</string>
+    <string name="order_distribution_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\nAPP指令分发准确率:%4$f%%\nAPP命令及参数解析平均耗时:%5$d\n空中传输平均耗时:%6$d</string>
+    <string name="server_search_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n后台搜索准确率:%4$f%%\n后台搜索平均耗时:%5$d\n空中传输平均耗时:%6$d</string>
 </resources>
