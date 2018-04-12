@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content"
+    android:background="#aa000000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/float_control_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/float_move_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_move" />
+
+        <ImageButton
+            android:id="@+id/float_close_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_close" />
+
+        <ImageButton
+            android:id="@+id/float_show_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:layout_toLeftOf="@id/float_close_ibtn"
+            android:background="@null"
+            android:scaleType="fitXY"
+
+            android:src="@drawable/icon_visible" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/separate_view_1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/float_control_bar_rl"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/float_log_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separate_view_1"
+        android:background="@color/heavy_transparent_black"
+        android:padding="8dp"
+        android:textColor="@color/white" />
+
+    <View
+        android:id="@+id/separate_view_2"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/float_log_tv"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/float_tool_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separate_view_2"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/float_module_lv"
+            android:layout_width="100dp"
+            android:layout_height="500dp" />
+
+        <ScrollView
+            android:id="@+id/float_tool_container_sv"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@color/heavy_transparent_black" />
+    </LinearLayout>
+</RelativeLayout>
