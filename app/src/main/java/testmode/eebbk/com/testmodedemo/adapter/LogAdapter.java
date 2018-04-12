@@ -46,6 +46,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
                 logEntity.getSpentTime(),
                 logEntity.getValue(),
                 logEntity.getDescription(),
+                logEntity.getTag(),
                 logEntity.getDate());
         holder.mLogTv.setText(log);
     }

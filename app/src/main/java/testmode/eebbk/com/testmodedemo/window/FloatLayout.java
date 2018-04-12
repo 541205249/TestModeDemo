@@ -261,6 +261,7 @@ public class FloatLayout extends FrameLayout {
                 logEntity.getSpentTime(),
                 logEntity.getValue(),
                 logEntity.getDescription(),
+                logEntity.getTag(),
                 logEntity.getDate()));
     }
 
