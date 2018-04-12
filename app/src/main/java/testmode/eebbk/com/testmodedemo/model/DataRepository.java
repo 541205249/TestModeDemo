@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import testmode.eebbk.com.testmodedemo.excel.LogFilter;
+import testmode.eebbk.com.testmodedemo.common.LogFilter;
+import testmode.eebbk.com.testmodedemo.excel.ExcelIntentService;
 
 /**
  * @author LiXiaoFeng
@@ -57,6 +58,7 @@ public class DataRepository {
 
         mLogEntities.addFirst(logEntity);
         notifyDataChange(logEntity, CHANGE_TYPE_INSERT);
+        ExcelIntentService.insertExcel(mContext, logEntity);
     }
 
     public void removeData(LogEntity logEntity) {
@@ -66,6 +68,7 @@ public class DataRepository {
 
         mLogEntities.remove(logEntity);
         notifyDataChange(logEntity, CHANGE_TYPE_REMOVE);
+        ExcelIntentService.removeExcel(mContext, logEntity);
     }
 
     public void init(Context context) {

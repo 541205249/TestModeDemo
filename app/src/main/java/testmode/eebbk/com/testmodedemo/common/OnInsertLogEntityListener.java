@@ -1,4 +1,4 @@
-package testmode.eebbk.com.testmodedemo.window;
+package testmode.eebbk.com.testmodedemo.common;
 
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 

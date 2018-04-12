@@ -21,6 +21,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
         android:orientation="horizontal">
 
         <Button
@@ -28,7 +29,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"
             android:text="添加：语音识别-成功" />
 
         <Button

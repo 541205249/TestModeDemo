@@ -1,12 +1,10 @@
 package testmode.eebbk.com.testmodedemo.common;
 
-import testmode.eebbk.com.testmodedemo.excel.LogFilter;
-
 /**
  * @author LiXiaoFeng
  * @date 2018/4/9
  * <p>
- * 常亮类
+ * 常量类
  */
 public final class Constant {
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -194,12 +192,7 @@ public final class Constant {
 
             }
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**

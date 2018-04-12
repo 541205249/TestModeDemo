@@ -29,13 +29,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="添加：语音识别-成功" />
+            android:text="添加：后台搜索-成功" />
 
         <Button
             android:id="@+id/log_server_search_fail_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="添加：语音识别-失败" />
+            android:text="添加：后台搜索-失败" />
     </LinearLayout>
 </LinearLayout>

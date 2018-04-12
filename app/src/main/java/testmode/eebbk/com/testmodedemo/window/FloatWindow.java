@@ -1,7 +1,6 @@
 package testmode.eebbk.com.testmodedemo.window;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -12,7 +11,7 @@ import android.view.WindowManager;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class FloatWindow {
-    private static FloatLayout2 mFloatLayout;
+    private static FloatLayout mFloatLayout;
     private static WindowManager mWindowManager;
     private static WindowManager.LayoutParams wmParams;
     private static boolean mHasShown;
@@ -20,7 +19,7 @@ public class FloatWindow {
     public static void createFloatWindow(Context context) {
         wmParams = new WindowManager.LayoutParams();
         WindowManager windowManager = getWindowManager(context);
-        mFloatLayout = new FloatLayout2(context);
+        mFloatLayout = new FloatLayout(context);
         if (Build.VERSION.SDK_INT >= 24) { /*android7.0不能用TYPE_TOAST*/
             wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         } else { /*以下代码块使得android6.0之后的用户不必再去手动开启悬浮窗权限*/
@@ -60,7 +59,7 @@ public class FloatWindow {
         mHasShown = true;
     }
 
-    public static FloatLayout2 getFloatLayout() {
+    public static FloatLayout getFloatLayout() {
         return mFloatLayout;
     }
 

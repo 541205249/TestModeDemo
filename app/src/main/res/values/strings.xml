@@ -8,7 +8,7 @@
     <string name="content_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n内容准确率:%4$f%%</string>
     <string name="display_statistics">APP页面展示平均耗时:%1$d</string>
     <string name="helper_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n其他应用响应平均耗时:%4$d\n空中传输平均耗时:%5$d</string>
-    <string name="semantic_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n语义理解正确率:%4$f%%\n语义理解平均耗时:%5$d\n</string>
+    <string name="semantic_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n语义理解正确率:%4$f%%\n语义理解平均耗时:%5$d</string>
     <string name="order_distribution_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\nAPP指令分发准确率:%4$f%%\nAPP命令及参数解析平均耗时:%5$d\n空中传输平均耗时:%6$d</string>
     <string name="server_search_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n后台搜索准确率:%4$f%%\n后台搜索平均耗时:%5$d\n空中传输平均耗时:%6$d</string>
 </resources>

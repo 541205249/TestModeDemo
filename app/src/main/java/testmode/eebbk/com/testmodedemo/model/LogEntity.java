@@ -10,14 +10,45 @@ import java.util.UUID;
  * @date 2018/4/9
  */
 public class LogEntity implements Parcelable {
+    /**
+     * id
+     */
     private String id;
+    /**
+     * 指标
+     */
     private String target;
+    /**
+     * 耗时
+     */
     private long spentTime;
+    /**
+     * 成功次数
+     */
     private int successCount;
+    /**
+     * 失败次数
+     */
     private int failCount;
+    /**
+     * 值
+     */
     private float value;
+    /**
+     * 方法名
+     */
     private String methodName;
+    /**
+     * 描述
+     */
     private String description;
+    /**
+     * 标签
+     */
+    private String tag;
+    /**
+     * 时间
+     */
     private String date;
 
     public String getId() {
@@ -88,6 +119,14 @@ public class LogEntity implements Parcelable {
         this.date = date;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public LogEntity() {
         this.id = UUID.randomUUID().toString();
     }
@@ -115,6 +154,7 @@ public class LogEntity implements Parcelable {
         dest.writeFloat(this.value);
         dest.writeString(this.methodName);
         dest.writeString(this.description);
+        dest.writeString(this.tag);
         dest.writeString(this.date);
     }
 
@@ -127,6 +167,7 @@ public class LogEntity implements Parcelable {
         this.value = in.readFloat();
         this.methodName = in.readString();
         this.description = in.readString();
+        this.tag = in.readString();
         this.date = in.readString();
     }
 

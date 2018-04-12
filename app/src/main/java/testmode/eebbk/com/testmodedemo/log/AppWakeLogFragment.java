@@ -17,15 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.common.DateUtils;
 
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -40,6 +41,7 @@ public class AppWakeLogFragment extends Fragment {
     private Button mVoiceMistakeBtn;
     private Button mButtonMistakeBtn;
     private LogBroadcastReceiver mLogBroadcastReceiver;
+    private OnInsertLogEntityListener mOnInsertLogEntityListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,6 +170,10 @@ public class AppWakeLogFragment extends Fragment {
                 totalNumber == 0 ? 0 : totalDuration / totalNumber));
     }
 
+    public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
+        mOnInsertLogEntityListener = onInsertLogEntityListener;
+    }
+
     private class LogBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -200,8 +206,15 @@ public class AppWakeLogFragment extends Fragment {
             if (position == -1) {
                 return;
             }
+
+            if (mOnInsertLogEntityListener != null) {
+                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
+            }
+
             mLogAdapter.notifyItemInserted(position);
-            mLogRv.scrollToPosition(position);
+            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
+                mLogRv.scrollToPosition(position);
+            }
             updateStatistics();
         }
 

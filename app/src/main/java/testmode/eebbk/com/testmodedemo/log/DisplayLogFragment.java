@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -36,6 +36,7 @@ public class DisplayLogFragment extends Fragment {
     private TextView mStatisticsTv;
     private LogAdapter mLogAdapter;
     private LogBroadcastReceiver mLogBroadcastReceiver;
+    private OnInsertLogEntityListener mOnInsertLogEntityListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,6 +106,10 @@ public class DisplayLogFragment extends Fragment {
                 totalNumber == 0 ? 0 : totalDisplayDuration / totalNumber));
     }
 
+    public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
+        mOnInsertLogEntityListener = onInsertLogEntityListener;
+    }
+
     private class LogBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -137,8 +142,15 @@ public class DisplayLogFragment extends Fragment {
             if (position == -1) {
                 return;
             }
+
+            if (mOnInsertLogEntityListener != null) {
+                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
+            }
+
             mLogAdapter.notifyItemInserted(position);
-            mLogRv.scrollToPosition(position);
+            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
+                mLogRv.scrollToPosition(position);
+            }
             updateStatistics();
         }
 

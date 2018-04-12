@@ -19,12 +19,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
 import testmode.eebbk.com.testmodedemo.common.DateUtils;
+import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -39,6 +40,7 @@ public class OrderDistributionLogFragment extends Fragment {
     private Button mFailBtn;
     private LogAdapter mLogAdapter;
     private LogBroadcastReceiver mLogBroadcastReceiver;
+    private OnInsertLogEntityListener mOnInsertLogEntityListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,6 +150,10 @@ public class OrderDistributionLogFragment extends Fragment {
                 totalNumber == 0 ? 0 : totalTransportDuration / totalNumber));
     }
 
+    public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
+        mOnInsertLogEntityListener = onInsertLogEntityListener;
+    }
+
     private class LogBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -180,8 +186,15 @@ public class OrderDistributionLogFragment extends Fragment {
             if (position == -1) {
                 return;
             }
+
+            if (mOnInsertLogEntityListener != null) {
+                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
+            }
+
             mLogAdapter.notifyItemInserted(position);
-            mLogRv.scrollToPosition(position);
+            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
+                mLogRv.scrollToPosition(position);
+            }
             updateStatistics();
         }
 

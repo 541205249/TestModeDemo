@@ -12,6 +12,7 @@ import java.util.List;
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.common.Constant;
 import testmode.eebbk.com.testmodedemo.common.DateUtils;
+import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 

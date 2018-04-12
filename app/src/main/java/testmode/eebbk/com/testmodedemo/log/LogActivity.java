@@ -2,6 +2,7 @@ package testmode.eebbk.com.testmodedemo.log;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -29,6 +31,9 @@ public class LogActivity extends Activity {
     private HelperLogFragment mHelperLogFragment;
     private SpeechLogFragment mSpeechLogFragment;
     private DisplayLogFragment mDisplayLogFragment;
+    private ServerSearchLogFragment mServerSearchLogFragment;
+    private OrderDistributionLogFragment mOrderDistributionLogFragment;
+    private SemanticLogFragment mSemanticLogFragment;
     private ListView mTypeLv;
     private FrameLayout mContentFl;
     private ArrayAdapter<String> mTypeAdapter;
@@ -82,6 +87,14 @@ public class LogActivity extends Activity {
             case Constant.Type.INDEX_TYPE_DISPLAY: {
                 if (mDisplayLogFragment == null) {
                     mDisplayLogFragment = new DisplayLogFragment();
+                    mDisplayLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mDisplayLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_DISPLAY;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mDisplayLogFragment;
                 break;
@@ -89,6 +102,14 @@ public class LogActivity extends Activity {
             case Constant.Type.INDEX_TYPE_APP_WAKE: {
                 if (mAppWakeLogFragment == null) {
                     mAppWakeLogFragment = new AppWakeLogFragment();
+                    mAppWakeLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mAppWakeLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_APP_WAKE;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mAppWakeLogFragment;
                 break;
@@ -96,39 +117,104 @@ public class LogActivity extends Activity {
             case Constant.Type.INDEX_TYPE_AUDIO: {
                 if (mAudioLogFragment == null) {
                     mAudioLogFragment = new AudioLogFragment();
+                    mAudioLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mAudioLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_AUDIO;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mAudioLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_SERVER_SEARCH: {
-                // TODO: 2018/4/10
+                if (mServerSearchLogFragment == null) {
+                    mServerSearchLogFragment = new ServerSearchLogFragment();
+                    mServerSearchLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mServerSearchLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_SERVER_SEARCH;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
+                }
+                fragment = mServerSearchLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_CONTENT: {
                 if (mContentLogFragment == null) {
                     mContentLogFragment = new ContentLogFragment();
+                    mContentLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mContentLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_CONTENT;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mContentLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_ORDER_DISTRIBUTION: {
-                // TODO: 2018/4/10
+                if (mOrderDistributionLogFragment == null) {
+                    mOrderDistributionLogFragment = new OrderDistributionLogFragment();
+                    mOrderDistributionLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mOrderDistributionLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_ORDER_DISTRIBUTION;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
+                }
+                fragment = mOrderDistributionLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_HELPER: {
                 if (mHelperLogFragment == null) {
                     mHelperLogFragment = new HelperLogFragment();
+                    mHelperLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mHelperLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_HELPER;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mHelperLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_SEMANTICS: {
-                // TODO: 2018/4/10
+                if (mSemanticLogFragment == null) {
+                    mSemanticLogFragment = new SemanticLogFragment();
+                    mSemanticLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mSemanticLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_SEMANTICS;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
+                }
+                fragment = mSemanticLogFragment;
                 break;
             }
             case Constant.Type.INDEX_TYPE_SPEECH: {
                 if (mSpeechLogFragment == null) {
                     mSpeechLogFragment = new SpeechLogFragment();
+                    mSpeechLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mSpeechLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_SPEECH;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mSpeechLogFragment;
                 break;
@@ -136,6 +222,14 @@ public class LogActivity extends Activity {
             case Constant.Type.INDEX_TYPE_SYSTEM_WAKE: {
                 if (mSystemWakeLogFragment == null) {
                     mSystemWakeLogFragment = new SystemWakeLogFragment();
+                    mSystemWakeLogFragment.setOnInsertLogEntityListener(logEntity -> {
+                        if (!SettingManager.getInstance(LogActivity.this).isAutoJump()) {
+                            return;
+                        }
+                        openFragment(mSystemWakeLogFragment);
+                        mCurrentSelectPosition = Constant.Type.INDEX_TYPE_SYSTEM_WAKE;
+                        mTypeAdapter.notifyDataSetChanged();
+                    });
                 }
                 fragment = mSystemWakeLogFragment;
                 break;
@@ -149,8 +243,18 @@ public class LogActivity extends Activity {
             return;
         }
 
+        openFragment(fragment);
+    }
+
+    private void openFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if (fragmentManager.findFragmentByTag(fragment.getClass().getName()) != null) {
+            return;
+        }
+
         getFragmentManager().beginTransaction()
-                .replace(mContentFl.getId(), fragment)
+                .replace(mContentFl.getId(), fragment, fragment.getClass().getName())
                 .commit();
     }
 }

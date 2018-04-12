@@ -2,13 +2,12 @@ package testmode.eebbk.com.testmodedemo.excel;
 
 import android.os.Environment;
 
-import testmode.eebbk.com.testmodedemo.common.DateUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import jxl.Cell;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.read.biff.BiffException;
@@ -18,45 +17,68 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class ExcelUtil {
     private static final String EXCEL_FILE_NAME = "问作业指标测试结果.xls";
-    private static final String[] EXCEL_TITLE = {"指标项", "耗时", "成功次数", "失败次数", "值", "方法名", "描述", "入表时间"};
+    private static final String[] EXCEL_TITLE = {"指标项", "耗时", "成功次数", "失败次数", "值", "方法名", "描述", "标签", "入表时间", "ID"};
     private static final String SHEET_NAME = "业务指标";
+    private static WritableWorkbook wwb = null;
 
-    public static synchronized void writeExcel(QualityData quality) throws Exception {
-        WritableWorkbook wwb = getWritableWorkbook();
-        WritableSheet sheet = getWritableSheet(wwb);
-        writeRow(quality, wwb, sheet);
-        wwb.close();
+    public static void insertLogEntity(LogEntity logEntity) throws Exception {
+        if (wwb == null) {
+            wwb = getWritableWorkbook();
+        }
+        WritableSheet sheet = getWritableSheet(logEntity);
+        insertRow(logEntity, sheet);
     }
 
-    private static void writeRow(QualityData quality, WritableWorkbook wwb, WritableSheet sheet)
+    private static void insertRow(LogEntity logEntity, WritableSheet sheet)
             throws WriteException, IOException {
         int sheetRows = sheet.getRows();
 
-        sheet.addCell(new Label(0, sheetRows, quality.getTarget()));
-        sheet.addCell(new Label(1, sheetRows, quality.getSpentTime() + ""));
-        sheet.addCell(new Label(2, sheetRows, quality.getSuccessCount() + ""));
-        sheet.addCell(new Label(3, sheetRows, quality.getFailCount() + ""));
-        sheet.addCell(new Label(4, sheetRows, quality.getMethodName()));
-        sheet.addCell(new Label(5, sheetRows, quality.getDescription()));
-        sheet.addCell(new Label(6, sheetRows, quality.getDate()));
+        sheet.addCell(new Label(0, sheetRows, logEntity.getTarget()));
+        sheet.addCell(new Label(1, sheetRows, logEntity.getSpentTime() + ""));
+        sheet.addCell(new Label(2, sheetRows, logEntity.getSuccessCount() + ""));
+        sheet.addCell(new Label(3, sheetRows, logEntity.getFailCount() + ""));
+        sheet.addCell(new Label(4, sheetRows, logEntity.getValue() + ""));
+        sheet.addCell(new Label(5, sheetRows, logEntity.getMethodName()));
+        sheet.addCell(new Label(6, sheetRows, logEntity.getDescription()));
+        sheet.addCell(new Label(7, sheetRows, logEntity.getTag()));
+        sheet.addCell(new Label(8, sheetRows, logEntity.getDate()));
+        sheet.addCell(new Label(9, sheetRows, logEntity.getId()));
         wwb.write();
     }
 
-    private static WritableSheet getWritableSheet(WritableWorkbook wwb) throws WriteException {
-        String sheetName = getSheetName();
+    public static void removeLogEntity(LogEntity logEntity) throws Exception {
+        if (wwb == null) {
+            wwb = getWritableWorkbook();
+        }
+        WritableSheet sheet = getWritableSheet(logEntity);
+        int sheetRows = sheet.getRows();
+        for (int i = 0; i < sheetRows; i++) {
+            Cell cell = sheet.getCell(9, i);
+            if (cell.getContents().equals(logEntity.getId())) {
+                sheet.removeRow(i);
+                return;
+            }
+        }
+
+        wwb.write();
+    }
+
+    private static WritableSheet getWritableSheet(LogEntity logEntity) throws WriteException {
+        String sheetName = getSheetName(logEntity);
         WritableSheet sheet = wwb.getSheet(sheetName);
         if (sheet == null) {
-            sheet = createWritableSheet(wwb);
+            sheet = createWritableSheet(sheetName, wwb);
         }
 
         return sheet;
     }
 
-    private static WritableSheet createWritableSheet(WritableWorkbook wwb) throws WriteException {
-        WritableSheet sheet = wwb.createSheet(getSheetName(), 0);
+    private static WritableSheet createWritableSheet(String sheetName, WritableWorkbook wwb) throws WriteException {
+        WritableSheet sheet = wwb.createSheet(sheetName, 0);
 
         Label label;
         for (int i = 0; i < EXCEL_TITLE.length; i++) {
@@ -85,8 +107,8 @@ public class ExcelUtil {
         return wwb;
     }
 
-    private static String getSheetName() {
-        return SHEET_NAME + DateUtils.getCurTimeString("yyyy-MM-dd");
+    private static String getSheetName(LogEntity logEntity) {
+        return SHEET_NAME + logEntity.getDate().substring(0, 10);
     }
 
     private static WritableCellFormat getHeader() {
@@ -111,4 +133,15 @@ public class ExcelUtil {
         return format;
     }
 
+    public static void clean() {
+        try {
+            if (wwb != null) {
+                wwb.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            wwb = null;
+        }
+    }
 }

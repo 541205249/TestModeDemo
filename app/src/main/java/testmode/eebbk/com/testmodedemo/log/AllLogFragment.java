@@ -21,6 +21,7 @@ import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -160,7 +161,9 @@ public class AllLogFragment extends Fragment {
                 return;
             }
             mLogAdapter.notifyItemInserted(position);
-            mLogRv.scrollToPosition(position);
+            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
+                mLogRv.scrollToPosition(position);
+            }
         }
 
         private void onRemoveLogEntity(LogEntity logEntity) {

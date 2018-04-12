@@ -6,24 +6,16 @@ import android.content.Intent;
 
 import testmode.eebbk.com.testmodedemo.common.Constant;
 import testmode.eebbk.com.testmodedemo.common.DateUtils;
-import testmode.eebbk.com.testmodedemo.excel.ExcelUtil;
-import testmode.eebbk.com.testmodedemo.excel.QualityData;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
-import testmode.eebbk.com.testmodedemo.window.FloatLayout2;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
+import testmode.eebbk.com.testmodedemo.window.FloatLayout;
 import testmode.eebbk.com.testmodedemo.window.FloatWindow;
 
 public class TestBroadCastReceiver extends BroadcastReceiver {
-    public TestBroadCastReceiver() {
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        insert2Memory(intent);
-        insert2Excel(intent);
-    }
-
-    private void insert2Memory(Intent intent) {
         String target = intent.getStringExtra("target");
         long spentTime = intent.getLongExtra("spentTime", 0);
         int successCount = intent.getIntExtra("successCount", 0);
@@ -31,6 +23,7 @@ public class TestBroadCastReceiver extends BroadcastReceiver {
         float value = intent.getFloatExtra("value", 0f);
         String methodName = intent.getStringExtra("methodName");
         String description = intent.getStringExtra("description");
+        String tag = intent.getStringExtra("tag");
 
         LogEntity logEntity = new LogEntity();
         logEntity.setTarget(target);
@@ -41,43 +34,42 @@ public class TestBroadCastReceiver extends BroadcastReceiver {
         logEntity.setMethodName(methodName);
         logEntity.setDescription(description);
         logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
+        logEntity.setTag(tag);
+
+        if (!check(context, logEntity)) {
+            return;
+        }
+
         DataRepository.getInstance().insertData(logEntity);
         updateFloatWindow(logEntity);
     }
 
-    private void insert2Excel(Intent intent) {
-        String target = intent.getStringExtra("target");
-        long spentTime = intent.getLongExtra("spentTime", 0);
-        int successCount = intent.getIntExtra("successCount", 0);
-        int failCount = intent.getIntExtra("failCount", 0);
-        float value = intent.getFloatExtra("value", 0f);
-        String methodName = intent.getStringExtra("methodName");
-        String description = intent.getStringExtra("description");
+    private boolean check(Context context, LogEntity logEntity) {
+        SettingManager settingManager = SettingManager.getInstance(context);
 
-        QualityData quality = new QualityData();
-        quality.setTarget(target);
-        quality.setSpentTime(spentTime);
-        quality.setSuccessCount(successCount);
-        quality.setFailCount(failCount);
-        quality.setValue(value);
-        quality.setMethodName(methodName);
-        quality.setDescription(description);
-        quality.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
-
-        try {
-            ExcelUtil.writeExcel(quality);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!settingManager.isOpenLog()) {
+            return false;
         }
+
+        return (Constant.LogTarget.SystemWake.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.SystemWake.PREFIX))
+                || (Constant.LogTarget.AppWake.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.AppWake.PREFIX))
+                || (Constant.LogTarget.Audio.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Audio.PREFIX))
+                || (Constant.LogTarget.Speech.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Speech.PREFIX))
+                || (Constant.LogTarget.Semantic.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Semantic.PREFIX))
+                || (Constant.LogTarget.OrderDistribution.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.OrderDistribution.PREFIX))
+                || (Constant.LogTarget.ServerSearch.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.ServerSearch.PREFIX))
+                || (Constant.LogTarget.Content.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Content.PREFIX))
+                || (Constant.LogTarget.Display.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Display.PREFIX))
+                || (Constant.LogTarget.Helper.FILTER.accept(logEntity.getTarget()) && settingManager.getModuleSettings(Constant.LogTarget.Helper.PREFIX));
     }
 
     private void updateFloatWindow(LogEntity logEntity) {
-        FloatLayout2 floatLayout2 = FloatWindow.getFloatLayout();
+        FloatLayout floatLayout = FloatWindow.getFloatLayout();
 
-        if (logEntity == null || floatLayout2 == null) {
+        if (logEntity == null || floatLayout == null) {
             return;
         }
 
-        floatLayout2.onLogInsert(logEntity);
+        floatLayout.onLogInsert(logEntity);
     }
 }

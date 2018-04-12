@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import testmode.eebbk.com.testmodedemo.log.LogActivity;
+import testmode.eebbk.com.testmodedemo.setting.SettingActivity;
 import testmode.eebbk.com.testmodedemo.window.FloatPermissionManager;
 import testmode.eebbk.com.testmodedemo.window.FloatWindowController;
 
@@ -29,12 +30,14 @@ public class MainActivity extends Activity {
 
         findViewById(R.id.close_float).setOnClickListener(view -> FloatWindowController.getInstance().close());
 
-        findViewById(R.id.btn).setOnClickListener(v -> {
-        });
-
-        findViewById(R.id.btn_log).setOnClickListener(v -> {
+        findViewById(R.id.log_btn).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, LogActivity.class);
             FloatWindowController.getInstance().close();
+            startActivity(intent);
+        });
+
+        findViewById(R.id.setting_btn).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
         });
 

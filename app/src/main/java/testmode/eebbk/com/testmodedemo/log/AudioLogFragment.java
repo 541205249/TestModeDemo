@@ -21,8 +21,10 @@ import java.util.List;
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
@@ -36,6 +38,7 @@ public class AudioLogFragment extends Fragment {
     private TextView mStatisticsTv;
     private Button mDecibelBtn;
     private LogBroadcastReceiver mLogBroadcastReceiver;
+    private OnInsertLogEntityListener mOnInsertLogEntityListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,6 +131,10 @@ public class AudioLogFragment extends Fragment {
                 samplingRateNumber == 0 ? 0 : totalSamplingRate / samplingRateNumber));
     }
 
+    public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
+        mOnInsertLogEntityListener = onInsertLogEntityListener;
+    }
+
     public class LogBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -160,8 +167,15 @@ public class AudioLogFragment extends Fragment {
             if (position == -1) {
                 return;
             }
+
+            if (mOnInsertLogEntityListener != null) {
+                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
+            }
+
             mLogAdapter.notifyItemInserted(position);
-            mLogRv.scrollToPosition(position);
+            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
+                mLogRv.scrollToPosition(position);
+            }
             updateStatistics();
         }
 

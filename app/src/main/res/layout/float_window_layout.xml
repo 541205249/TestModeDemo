@@ -1,470 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="500dp"
-    android:layout_height="400dp"
+    android:layout_height="wrap_content"
+    android:background="#aa000000"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/show_view_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="展开/收起"/>
+    <RelativeLayout
+        android:id="@+id/float_control_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/float_move_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_move" />
+
+        <ImageButton
+            android:id="@+id/float_close_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_close" />
+
+        <ImageButton
+            android:id="@+id/float_show_ibtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:layout_toLeftOf="@id/float_close_ibtn"
+            android:background="@null"
+            android:scaleType="fitXY"
+
+            android:src="@drawable/icon_visible" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/separate_view_1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/float_control_bar_rl"
+        android:background="@color/white" />
 
     <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp" />
-
-    <ScrollView
-        android:id="@+id/contentLayout"
+        android:id="@+id/float_log_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separate_view_1"
+        android:background="@color/heavy_transparent_black"
+        android:padding="8dp"
+        android:textColor="@color/white" />
+
+    <View
+        android:id="@+id/separate_view_2"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/float_log_tv"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/float_tool_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separate_view_2"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/float_module_lv"
+            android:layout_width="100dp"
+            android:layout_height="500dp" />
+
+        <ScrollView
+            android:id="@+id/float_tool_container_sv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:background="#cc521911">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="唤醒"
-                    android:textSize="30sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:text="共执行次数："
-                    android:textSize="20sp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="收到唤醒命令后，启动页面耗时："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="锁屏下:" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="亮屏下:" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text=" 语音唤醒："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:id="@+id/cv_counter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="失败次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:id="@+id/a"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="物理键唤醒："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="失败次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="工具栏唤醒："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="失败次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text=" 误唤醒："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:background="#cc521911">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="当前分贝" />
-
-                <TextView
-                    android:id="@+id/tv_db_listener"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:background="#cc521911">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="语义识别"
-                    android:textSize="30sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:text="共执行次数："
-                    android:textSize="20sp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="识别结果："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="识别耗时："
-                        android:textSize="20sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="此次耗时:" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="平均耗时:" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:background="#cc521911">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="搜索结果与展示"
-                    android:textSize="30sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:text="共执行次数："
-                    android:textSize="20sp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="后台搜索："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="此次耗时:" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="平均耗时:" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="页面展示："
-                        android:textSize="20sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="此次耗时:" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="平均耗时:" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="正确结果："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical"
-                android:background="#cc521911">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="任务分发"
-                    android:textSize="30sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:text="共执行次数："
-                    android:textSize="20sp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="命令响应："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="此次耗时:" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="平均耗时:" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:text="执行结果："
-                        android:textSize="20sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="30dp"
-                        android:text="成功次数:" />
-                    <testmode.eebbk.com.testmodedemo.window.CounterView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-    </ScrollView>
-</LinearLayout>
+            android:layout_height="500dp"
+            android:background="@color/heavy_transparent_black" />
+    </LinearLayout>
+</RelativeLayout>
