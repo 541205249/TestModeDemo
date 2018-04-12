@@ -217,7 +217,7 @@ public class FloatLayout extends FrameLayout {
             case Constant.Module.INDEX_MODULE_HELPER: {
                 if (mHelperToolView == null) {
                     mHelperToolView = new HelperToolView(getContext());
-                    mSystemWakeToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
+                    mHelperToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
                 }
                 view = mHelperToolView;
                 break;

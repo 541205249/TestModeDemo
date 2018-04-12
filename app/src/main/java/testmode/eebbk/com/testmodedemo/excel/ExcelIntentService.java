@@ -52,10 +52,4 @@ public class ExcelIntentService extends IntentService {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ExcelUtil.clean();
-    }
 }

@@ -345,7 +345,7 @@ public class SystemWakeLogFragment extends Fragment {
             }
 
             if (mOnInsertLogEntityListener != null) {
-                onInsertLogEntity(logEntity);
+                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
             }
 
             mLogAdapter.notifyItemInserted(position);

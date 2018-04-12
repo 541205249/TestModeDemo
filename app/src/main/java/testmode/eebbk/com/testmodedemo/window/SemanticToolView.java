@@ -46,7 +46,7 @@ public class SemanticToolView extends LinearLayout {
 
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.SUCCESS);
+            logEntity.setTarget(Constant.LogTarget.Semantic.SUCCESS);
             logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
@@ -54,7 +54,7 @@ public class SemanticToolView extends LinearLayout {
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.FAIL);
+            logEntity.setTarget(Constant.LogTarget.Semantic.FAIL);
             logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);

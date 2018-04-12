@@ -76,14 +76,14 @@ public class SemanticLogFragment extends Fragment {
 
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.SUCCESS);
+            logEntity.setTarget(Constant.LogTarget.Semantic.SUCCESS);
             logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.FAIL);
+            logEntity.setTarget(Constant.LogTarget.Semantic.FAIL);
             logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);

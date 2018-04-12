@@ -1,6 +1,8 @@
 package testmode.eebbk.com.testmodedemo.excel;
 
+import android.nfc.Tag;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,20 +22,18 @@ import jxl.write.WriteException;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class ExcelUtil {
+    private static final String TAG = ExcelUtil.class.getSimpleName();
     private static final String EXCEL_FILE_NAME = "问作业指标测试结果.xls";
     private static final String[] EXCEL_TITLE = {"指标项", "耗时", "成功次数", "失败次数", "值", "方法名", "描述", "标签", "入表时间", "ID"};
     private static final String SHEET_NAME = "业务指标";
-    private static WritableWorkbook wwb = null;
 
     public static void insertLogEntity(LogEntity logEntity) throws Exception {
-        if (wwb == null) {
-            wwb = getWritableWorkbook();
-        }
-        WritableSheet sheet = getWritableSheet(logEntity);
-        insertRow(logEntity, sheet);
+        WritableWorkbook wwb = getWritableWorkbook();
+        WritableSheet sheet = getWritableSheet(wwb, logEntity);
+        insertRow(logEntity, wwb, sheet);
     }
 
-    private static void insertRow(LogEntity logEntity, WritableSheet sheet)
+    private static void insertRow(LogEntity logEntity, WritableWorkbook wwb, WritableSheet sheet)
             throws WriteException, IOException {
         int sheetRows = sheet.getRows();
 
@@ -48,26 +48,28 @@ public class ExcelUtil {
         sheet.addCell(new Label(8, sheetRows, logEntity.getDate()));
         sheet.addCell(new Label(9, sheetRows, logEntity.getId()));
         wwb.write();
+        wwb.close();
+        Log.i(TAG, "id = " + logEntity.getId() + "插入成功");
     }
 
     public static void removeLogEntity(LogEntity logEntity) throws Exception {
-        if (wwb == null) {
-            wwb = getWritableWorkbook();
-        }
-        WritableSheet sheet = getWritableSheet(logEntity);
+        WritableWorkbook wwb = getWritableWorkbook();
+        WritableSheet sheet = getWritableSheet(wwb, logEntity);
         int sheetRows = sheet.getRows();
         for (int i = 0; i < sheetRows; i++) {
             Cell cell = sheet.getCell(9, i);
             if (cell.getContents().equals(logEntity.getId())) {
                 sheet.removeRow(i);
-                return;
+                break;
             }
         }
 
         wwb.write();
+        wwb.close();
+        Log.i(TAG, "id = " + logEntity.getId() + "删除成功");
     }
 
-    private static WritableSheet getWritableSheet(LogEntity logEntity) throws WriteException {
+    private static WritableSheet getWritableSheet(WritableWorkbook wwb, LogEntity logEntity) throws WriteException {
         String sheetName = getSheetName(logEntity);
         WritableSheet sheet = wwb.getSheet(sheetName);
         if (sheet == null) {
@@ -131,17 +133,5 @@ public class ExcelUtil {
             e.printStackTrace();
         }
         return format;
-    }
-
-    public static void clean() {
-        try {
-            if (wwb != null) {
-                wwb.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            wwb = null;
-        }
     }
 }

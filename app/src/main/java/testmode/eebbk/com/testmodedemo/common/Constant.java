@@ -234,12 +234,7 @@ public final class Constant {
                 public static final String DURATION = PREFIX + "应用内唤醒耗时";
             }
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -254,12 +249,7 @@ public final class Constant {
             public static final String DECIBEL = PREFIX + "分贝";
             public static final String SAMPLING_RATE = PREFIX + "采样率";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -271,17 +261,12 @@ public final class Constant {
         public static final class Speech {
             public static final String PREFIX = "语音识别-";
 
-            public static final String SUCCESS = PREFIX + ":成功";
+            public static final String SUCCESS = PREFIX + "成功";
             public static final String FAIL = PREFIX + "失败";
-            public static final String AUDIO_DURATION = PREFIX + ":语音时长";
+            public static final String AUDIO_DURATION = PREFIX + "语音时长";
             public static final String CONVERTING_DURATION = PREFIX + ":语音即时转换文本耗时";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -297,12 +282,7 @@ public final class Constant {
             public static final String FAIL = PREFIX + "失败";
             public static final String DURATION = PREFIX + "语义理解耗时";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -319,12 +299,7 @@ public final class Constant {
             public static final String APP_DURATION = PREFIX + "APP命令及参数解析平均耗时";
             public static final String TRANSPORT_DURATION = PREFIX + "空中传输耗时";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -341,12 +316,7 @@ public final class Constant {
             public static final String SERVER_DURATION = PREFIX + "后台搜索耗时";
             public static final String TRANSPORT_DURATION = PREFIX + "空中传输耗时";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -361,12 +331,7 @@ public final class Constant {
             public static final String SUCCESS = PREFIX + "成功";
             public static final String FAIL = PREFIX + "失败";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
@@ -380,12 +345,7 @@ public final class Constant {
 
             public static final String DURATION = PREFIX + ":APP页面展示耗时";
 
-            public static final LogFilter FILTER = new LogFilter() {
-                @Override
-                public boolean accept(String target) {
-                    return target.startsWith(PREFIX);
-                }
-            };
+            public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
 
         /**
