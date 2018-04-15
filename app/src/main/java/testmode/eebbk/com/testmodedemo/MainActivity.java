@@ -10,6 +10,12 @@ import testmode.eebbk.com.testmodedemo.setting.SettingActivity;
 import testmode.eebbk.com.testmodedemo.window.FloatPermissionManager;
 import testmode.eebbk.com.testmodedemo.window.FloatWindowController;
 
+/**
+ * @author LiXiaoFeng
+ * @date 2018/4/15
+ * <p>
+ * 主页面
+ */
 public class MainActivity extends Activity {
 
     @Override

@@ -21,6 +21,7 @@ import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.common.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.setting.SettingManager;
@@ -28,6 +29,8 @@ import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/10
+ * <p>
+ * 悬浮窗布局
  */
 public class FloatLayout extends FrameLayout {
     private final WindowManager mWindowManager;
@@ -253,16 +256,7 @@ public class FloatLayout extends FrameLayout {
             return;
         }
 
-        mLogTv.setText(getContext().getString(R.string.log,
-                logEntity.getTarget(),
-                logEntity.getMethodName(),
-                logEntity.getSuccessCount(),
-                logEntity.getFailCount(),
-                logEntity.getSpentTime(),
-                logEntity.getValue(),
-                logEntity.getDescription(),
-                logEntity.getTag(),
-                logEntity.getDate()));
+        mLogTv.setText(LogFormatUtil.format(logEntity));
     }
 
     public void onLogInsert(LogEntity logEntity) {

@@ -23,14 +23,6 @@ public class LogEntity implements Parcelable {
      */
     private long spentTime;
     /**
-     * 成功次数
-     */
-    private int successCount;
-    /**
-     * 失败次数
-     */
-    private int failCount;
-    /**
      * 值
      */
     private float value;
@@ -69,22 +61,6 @@ public class LogEntity implements Parcelable {
 
     public void setSpentTime(long spentTime) {
         this.spentTime = spentTime;
-    }
-
-    public int getSuccessCount() {
-        return successCount;
-    }
-
-    public void setSuccessCount(int successCount) {
-        this.successCount = successCount;
-    }
-
-    public int getFailCount() {
-        return failCount;
-    }
-
-    public void setFailCount(int failCount) {
-        this.failCount = failCount;
     }
 
     public float getValue() {
@@ -149,8 +125,6 @@ public class LogEntity implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.target);
         dest.writeLong(this.spentTime);
-        dest.writeInt(this.successCount);
-        dest.writeInt(this.failCount);
         dest.writeFloat(this.value);
         dest.writeString(this.methodName);
         dest.writeString(this.description);
@@ -162,8 +136,6 @@ public class LogEntity implements Parcelable {
         this.id = in.readString();
         this.target = in.readString();
         this.spentTime = in.readLong();
-        this.successCount = in.readInt();
-        this.failCount = in.readInt();
         this.value = in.readFloat();
         this.methodName = in.readString();
         this.description = in.readString();

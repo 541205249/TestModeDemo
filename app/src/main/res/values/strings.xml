@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">问作业测试模式</string>
-    <string name="log">指标项:%1$s\n方法名:%2$s\n成功次数:%3$d\n失败次数:%4$d\n耗时:%5$d\n值:%6$f\n描述:%7$s\n标签:%8$s\n时间:%9$s</string>
+    <string name="log">指标项:%1$s\n方法名:%2$s\n耗时:%3$d\n值:%4$f\n描述:%5$s\n标签:%6$s\n时间:%7$s</string>
     <string name="system_wake_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n误唤醒次数:%4$d\n唤醒成功率:%5$f%%\n误唤醒率:%6$f%%\n系统处理平均耗时:%7$d\n应用响应平均耗时:%8$d\n系统唤醒平均总耗时:%9$d</string>
     <string name="app_wake_statistics">总次数:%1$d\n成功次数:%2$d\n失败次数:%3$d\n误唤醒次数:%4$d\n唤醒成功率:%5$f%%\n误唤醒率:%6$f%%\n应用内唤醒平均耗时:%7$d</string>
     <string name="audio_statistics">历史最低分贝:%1$f\n历史最高分贝:%2$f\n平均分贝:%3$f\n平均采样率:%4$f%%</string>

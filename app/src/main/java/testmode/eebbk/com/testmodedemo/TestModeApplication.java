@@ -7,6 +7,8 @@ import testmode.eebbk.com.testmodedemo.model.DataRepository;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/11
+ * <p>
+ * 全局Application
  */
 public class TestModeApplication extends Application {
 

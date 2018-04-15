@@ -47,7 +47,6 @@ public class HelperToolView extends LinearLayout {
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Helper.SUCCESS);
-            logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();
@@ -55,7 +54,6 @@ public class HelperToolView extends LinearLayout {
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Helper.FAIL);
-            logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();

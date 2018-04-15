@@ -10,6 +10,8 @@ import testmode.eebbk.com.testmodedemo.model.LogEntity;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/12
+ * <p>
+ * Excel操作服务
  */
 public class ExcelIntentService extends IntentService {
     private static final String KEY_LOG_ENTITY = "log";

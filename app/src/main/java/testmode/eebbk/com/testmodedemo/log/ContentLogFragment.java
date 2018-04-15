@@ -77,14 +77,12 @@ public class ContentLogFragment extends Fragment {
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Content.SUCCESS);
-            logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Content.FAIL);
-            logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });

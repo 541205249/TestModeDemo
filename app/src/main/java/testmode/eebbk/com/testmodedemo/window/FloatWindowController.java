@@ -21,7 +21,7 @@ public class FloatWindowController {
 
     public void open(Context context) {
         mContext = context;
-        if(mHomeKeyReceiver == null) {
+        if (mHomeKeyReceiver == null) {
             initFloatWindow(context);
         }
 
@@ -33,7 +33,7 @@ public class FloatWindowController {
     }
 
     public void close() {
-        if(mContext == null) {
+        if (mContext == null) {
             return;
         }
 

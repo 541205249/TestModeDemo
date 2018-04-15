@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
+import testmode.eebbk.com.testmodedemo.common.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
@@ -38,17 +40,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             return;
         }
 
-        String log = holder.itemView.getContext().getResources().getString(R.string.log,
-                logEntity.getTarget(),
-                logEntity.getMethodName(),
-                logEntity.getSuccessCount(),
-                logEntity.getFailCount(),
-                logEntity.getSpentTime(),
-                logEntity.getValue(),
-                logEntity.getDescription(),
-                logEntity.getTag(),
-                logEntity.getDate());
-        holder.mLogTv.setText(log);
+        holder.mLogTv.setText(LogFormatUtil.format(logEntity));
     }
 
     public int insertData(LogEntity logEntity) {
