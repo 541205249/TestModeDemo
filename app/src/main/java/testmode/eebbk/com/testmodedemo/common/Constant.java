@@ -264,7 +264,7 @@ public final class Constant {
             public static final String SUCCESS = PREFIX + "成功";
             public static final String FAIL = PREFIX + "失败";
             public static final String AUDIO_DURATION = PREFIX + "语音时长";
-            public static final String CONVERTING_DURATION = PREFIX + ":语音即时转换文本耗时";
+            public static final String CONVERTING_DURATION = PREFIX + "语音即时转换文本耗时";
 
             public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
@@ -343,7 +343,7 @@ public final class Constant {
         public static final class Display {
             public static final String PREFIX = "APP端页面展示-";
 
-            public static final String DURATION = PREFIX + ":APP页面展示耗时";
+            public static final String DURATION = PREFIX + "APP页面展示耗时";
 
             public static final LogFilter FILTER = target -> target.startsWith(PREFIX);
         }
