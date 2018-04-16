@@ -46,9 +46,9 @@ public class ExcelIntentService extends IntentService {
 
         try {
             if (isInsert) {
-                ExcelUtil.insertLogEntity(logEntity);
+                ExcelUtil.insertLogEntity(this, logEntity);
             } else {
-                ExcelUtil.removeLogEntity(logEntity);
+                ExcelUtil.removeLogEntity(this, logEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();

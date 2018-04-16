@@ -1,5 +1,9 @@
 package testmode.eebbk.com.testmodedemo.excel;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 
 import java.io.File;
@@ -8,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import jxl.Cell;
+import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.read.biff.BiffException;
@@ -17,16 +22,17 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class ExcelUtil {
     private static final String TAG = ExcelUtil.class.getSimpleName();
-    private static final String EXCEL_FILE_NAME = "问作业指标测试结果.xls";
+    private static final String EXCEL_FILE_NAME = "指标测试结果.xls";
     private static final String[] EXCEL_TITLE = {"指标项", "耗时", "值", "方法名", "描述", "标签", "入表时间", "ID"};
     private static final String SHEET_NAME = "业务指标";
 
-    public static void insertLogEntity(LogEntity logEntity) throws Exception {
-        WritableWorkbook wwb = getWritableWorkbook();
+    public static void insertLogEntity(Context context, LogEntity logEntity) throws Exception {
+        WritableWorkbook wwb = getWritableWorkbook(context);
         WritableSheet sheet = getWritableSheet(wwb, logEntity);
         insertRow(logEntity, wwb, sheet);
     }
@@ -47,8 +53,8 @@ public class ExcelUtil {
         wwb.close();
     }
 
-    public static void removeLogEntity(LogEntity logEntity) throws Exception {
-        WritableWorkbook wwb = getWritableWorkbook();
+    public static void removeLogEntity(Context context, LogEntity logEntity) throws Exception {
+        WritableWorkbook wwb = getWritableWorkbook(context);
         WritableSheet sheet = getWritableSheet(wwb, logEntity);
         int sheetRows = sheet.getRows();
         for (int i = 0; i < sheetRows; i++) {
@@ -87,9 +93,8 @@ public class ExcelUtil {
         return sheet;
     }
 
-    private static WritableWorkbook getWritableWorkbook() throws IOException, BiffException {
-        File dir = Environment.getExternalStorageDirectory();
-        File file = new File(dir, EXCEL_FILE_NAME);
+    private static WritableWorkbook getWritableWorkbook(Context context) throws IOException, BiffException, PackageManager.NameNotFoundException {
+        File file = getExcelFile(context);
 
         WritableWorkbook wwb;
         if (file.exists()) {
@@ -101,6 +106,13 @@ public class ExcelUtil {
         }
 
         return wwb;
+    }
+
+    private static File getExcelFile(Context context) throws PackageManager.NameNotFoundException {
+        File dir = Environment.getExternalStorageDirectory();
+        ComponentName componentName = new ComponentName(context, TestBroadCastReceiver.class);
+        ActivityInfo activityInfo = context.getPackageManager().getReceiverInfo(componentName, PackageManager.GET_META_DATA);
+        return new File(dir, activityInfo.metaData.getString("test_app_name") + EXCEL_FILE_NAME);
     }
 
     private static String getSheetName(LogEntity logEntity) {
@@ -127,5 +139,26 @@ public class ExcelUtil {
             e.printStackTrace();
         }
         return format;
+    }
+
+    public static void test() {
+        WritableWorkbook writableWorkbook = null;
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "man.xls");
+            Workbook workbook = Workbook.getWorkbook(file);
+            writableWorkbook = Workbook.createWorkbook(file, workbook);
+            WritableSheet sheet = writableWorkbook.getSheet("Sheet1");
+            sheet.addCell(new Label(2, 0, "xxx"));
+            writableWorkbook.write();
+            writableWorkbook.close();
+        } catch (Exception e) {
+            try {
+                if (writableWorkbook != null) {
+                    writableWorkbook.close();
+                }
+            } catch (Exception e1) {
+                e.printStackTrace();
+            }
+        }
     }
 }

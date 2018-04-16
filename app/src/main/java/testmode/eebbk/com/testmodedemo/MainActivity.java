@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import testmode.eebbk.com.testmodedemo.excel.ExcelUtil;
 import testmode.eebbk.com.testmodedemo.log.LogActivity;
 import testmode.eebbk.com.testmodedemo.setting.SettingActivity;
 import testmode.eebbk.com.testmodedemo.window.FloatPermissionManager;
@@ -46,6 +47,5 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
         });
-
     }
 }

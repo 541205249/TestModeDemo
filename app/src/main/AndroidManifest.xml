@@ -29,8 +29,11 @@
 
         <receiver android:name=".TestBroadCastReceiver">
             <intent-filter>
-                <action android:name="com.testmode.action.com.eebbk.uservoicecollection" />
+                <action android:name="com.suidadabian.lixiaofeng.aop.testmode.action" />
             </intent-filter>
+            <meta-data
+                android:name="test_app_name"
+                android:value="问作业" />
         </receiver>
     </application>
 
