@@ -85,12 +85,13 @@ public class FloatLayout extends FrameLayout {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
                 textView.setTextColor(getResources().getColor(R.color.white));
                 if (position == mCurrentSelectPosition) {
-                    textView.setBackgroundColor(getResources().getColor(R.color.half_transparent_black));
+                    textView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
                 } else {
                     textView.setBackgroundColor(getResources().getColor(R.color.transparent_black));
                 }
                 return textView;
             }
+
         };
         mModuleLv.setOnItemClickListener((parent, v, position, id) -> {
             mCurrentSelectPosition = position;
