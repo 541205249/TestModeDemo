@@ -14,6 +14,8 @@ import testmode.eebbk.com.testmodedemo.excel.ExcelIntentService;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/8
+ * <p>
+ * 数据缓存库，负责存储日志数据及执行相关的全局操作
  */
 public class DataRepository {
     private static final String TAG = DataRepository.class.getSimpleName();

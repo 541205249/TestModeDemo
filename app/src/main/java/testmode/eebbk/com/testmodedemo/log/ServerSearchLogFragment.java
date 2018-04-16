@@ -48,10 +48,10 @@ public class ServerSearchLogFragment extends Fragment {
 
         mLogBroadcastReceiver = new LogBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.LogTarget.OrderDistribution.SUCCESS);
-        intentFilter.addAction(Constant.LogTarget.OrderDistribution.FAIL);
-        intentFilter.addAction(Constant.LogTarget.OrderDistribution.APP_DURATION);
-        intentFilter.addAction(Constant.LogTarget.OrderDistribution.TRANSPORT_DURATION);
+        intentFilter.addAction(Constant.LogTarget.ServerSearch.SUCCESS);
+        intentFilter.addAction(Constant.LogTarget.ServerSearch.FAIL);
+        intentFilter.addAction(Constant.LogTarget.ServerSearch.SERVER_DURATION);
+        intentFilter.addAction(Constant.LogTarget.ServerSearch.TRANSPORT_DURATION);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mLogBroadcastReceiver, intentFilter);
     }
 
@@ -78,14 +78,12 @@ public class ServerSearchLogFragment extends Fragment {
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.ServerSearch.SUCCESS);
-            logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.ServerSearch.FAIL);
-            logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });
@@ -141,7 +139,7 @@ public class ServerSearchLogFragment extends Fragment {
         }
 
         totalNumber = successNumber + failNumber;
-        mStatisticsTv.setText(getString(R.string.order_distribution_statistics,
+        mStatisticsTv.setText(getString(R.string.server_search_statistics,
                 totalNumber,
                 successNumber,
                 failNumber,

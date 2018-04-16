@@ -46,16 +46,14 @@ public class OrderDistributionToolView extends LinearLayout {
 
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.SUCCESS);
-            logEntity.setSuccessCount(1);
+            logEntity.setTarget(Constant.LogTarget.OrderDistribution.SUCCESS);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.FAIL);
-            logEntity.setFailCount(1);
+            logEntity.setTarget(Constant.LogTarget.OrderDistribution.FAIL);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();
@@ -94,19 +92,19 @@ public class OrderDistributionToolView extends LinearLayout {
             }
 
             switch (logEntity.getTarget()) {
-                case Constant.LogTarget.Speech.SUCCESS: {
+                case Constant.LogTarget.OrderDistribution.SUCCESS: {
                     successNumber++;
                     break;
                 }
-                case Constant.LogTarget.Speech.FAIL: {
+                case Constant.LogTarget.OrderDistribution.FAIL: {
                     failNumber++;
                     break;
                 }
-                case Constant.LogTarget.Speech.AUDIO_DURATION: {
+                case Constant.LogTarget.OrderDistribution.APP_DURATION: {
                     totalAppDuration += logEntity.getSpentTime();
                     break;
                 }
-                case Constant.LogTarget.Speech.CONVERTING_DURATION: {
+                case Constant.LogTarget.OrderDistribution.TRANSPORT_DURATION: {
                     totalTransportDuration += logEntity.getSpentTime();
                     break;
                 }

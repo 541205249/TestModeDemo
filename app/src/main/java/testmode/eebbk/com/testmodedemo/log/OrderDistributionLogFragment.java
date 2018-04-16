@@ -77,15 +77,13 @@ public class OrderDistributionLogFragment extends Fragment {
 
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.SUCCESS);
-            logEntity.setSuccessCount(1);
+            logEntity.setTarget(Constant.LogTarget.OrderDistribution.SUCCESS);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
-            logEntity.setTarget(Constant.LogTarget.Speech.FAIL);
-            logEntity.setFailCount(1);
+            logEntity.setTarget(Constant.LogTarget.OrderDistribution.FAIL);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             DataRepository.getInstance().insertData(logEntity);
         });

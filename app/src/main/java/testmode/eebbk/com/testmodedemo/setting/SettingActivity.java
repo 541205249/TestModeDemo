@@ -16,6 +16,8 @@ import testmode.eebbk.com.testmodedemo.common.Constant;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/12
+ * <p>
+ * 设置页
  */
 public class SettingActivity extends Activity {
     private static final String SETTING_AUTO_JUMP = "自动跳转";

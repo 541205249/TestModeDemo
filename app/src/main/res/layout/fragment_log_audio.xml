@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:lineSpacingExtra="2dp"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/log_audio_rv"
@@ -19,8 +21,8 @@
         android:layout_weight="1" />
 
     <Button
-        android:layout_width="match_parent"
         android:id="@+id/log_audio_decibel_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="添加：分贝" />
 </LinearLayout>

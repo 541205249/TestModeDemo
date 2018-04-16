@@ -10,6 +10,8 @@ import testmode.eebbk.com.testmodedemo.model.LogEntity;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/12
+ * <p>
+ * Excel操作服务
  */
 public class ExcelIntentService extends IntentService {
     private static final String KEY_LOG_ENTITY = "log";
@@ -44,18 +46,12 @@ public class ExcelIntentService extends IntentService {
 
         try {
             if (isInsert) {
-                ExcelUtil.insertLogEntity(logEntity);
+                ExcelUtil.insertLogEntity(this, logEntity);
             } else {
-                ExcelUtil.removeLogEntity(logEntity);
+                ExcelUtil.removeLogEntity(this, logEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ExcelUtil.clean();
     }
 }

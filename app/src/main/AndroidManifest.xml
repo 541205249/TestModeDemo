@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="testmode.eebbk.com.testmodedemo">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -28,8 +29,11 @@
 
         <receiver android:name=".TestBroadCastReceiver">
             <intent-filter>
-                <action android:name="com.testmode.action.com.suidadabian.lixiaofeng.test_tools_demo" />
+                <action android:name="com.suidadabian.lixiaofeng.aop.testmode.action" />
             </intent-filter>
+            <meta-data
+                android:name="test_app_name"
+                android:value="问作业" />
         </receiver>
     </application>
 

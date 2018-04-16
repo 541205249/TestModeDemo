@@ -8,8 +8,8 @@ import java.util.HashMap;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/12
- * 【实现的主要功能】
- * 【修改者，修改日期，修改内容】
+ * <p>
+ * 设置管理器
  */
 public class SettingManager {
     private static final String SP_NAME = "setting";

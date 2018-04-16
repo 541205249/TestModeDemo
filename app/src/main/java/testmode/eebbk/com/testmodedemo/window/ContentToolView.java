@@ -47,7 +47,6 @@ public class ContentToolView extends LinearLayout {
         mSuccessBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Content.SUCCESS);
-            logEntity.setSuccessCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();
@@ -55,7 +54,6 @@ public class ContentToolView extends LinearLayout {
         mFailBtn.setOnClickListener(v -> {
             LogEntity logEntity = new LogEntity();
             logEntity.setTarget(Constant.LogTarget.Content.FAIL);
-            logEntity.setFailCount(1);
             logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
             insertLogEntity(logEntity);
             updateStatistics();
