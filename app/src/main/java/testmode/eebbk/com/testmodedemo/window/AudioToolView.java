@@ -18,7 +18,7 @@ import testmode.eebbk.com.testmodedemo.model.LogEntity;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/11
- *
+ * <p>
  * 音频工具栏
  */
 public class AudioToolView extends LinearLayout {

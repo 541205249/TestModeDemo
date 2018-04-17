@@ -83,7 +83,9 @@ public class OrderDistributionToolView extends LinearLayout {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalAppDurationNumber = 0;
         long totalAppDuration = 0;
+        int totalTransportDurationNumber = 0;
         long totalTransportDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -102,10 +104,12 @@ public class OrderDistributionToolView extends LinearLayout {
                 }
                 case Constant.LogTarget.OrderDistribution.APP_DURATION: {
                     totalAppDuration += logEntity.getSpentTime();
+                    totalAppDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.OrderDistribution.TRANSPORT_DURATION: {
                     totalTransportDuration += logEntity.getSpentTime();
+                    totalTransportDurationNumber++;
                     break;
                 }
                 default: {
@@ -120,8 +124,8 @@ public class OrderDistributionToolView extends LinearLayout {
                 successNumber,
                 failNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : totalAppDuration / totalNumber,
-                totalNumber == 0 ? 0 : totalTransportDuration / totalNumber));
+                totalAppDurationNumber == 0 ? 0 : totalAppDuration / totalAppDurationNumber,
+                totalTransportDurationNumber == 0 ? 0 : totalTransportDuration / totalTransportDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {

@@ -73,6 +73,7 @@ public class AppWakeToolView extends LinearLayout {
         int successNumber = 0;
         int failNumber = 0;
         int mistakeNumber = 0;
+        int totalDurationNumber = 0;
         long totalDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -95,6 +96,7 @@ public class AppWakeToolView extends LinearLayout {
                 }
                 case Constant.LogTarget.AppWake.Voice.DURATION: {
                     totalDuration += logEntity.getSpentTime();
+                    totalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.AppWake.Button.SUCCESS: {
@@ -111,6 +113,7 @@ public class AppWakeToolView extends LinearLayout {
                 }
                 case Constant.LogTarget.AppWake.Button.DURATION: {
                     totalDuration += logEntity.getSpentTime();
+                    totalDurationNumber++;
                     break;
                 }
                 default: {
@@ -127,7 +130,7 @@ public class AppWakeToolView extends LinearLayout {
                 mistakeNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
                 totalNumber == 0 ? 0 : mistakeNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : totalDuration / totalNumber));
+                totalDurationNumber == 0 ? 0 : totalDuration / totalDurationNumber));
     }
 
     private void insertLogEntity(LogEntity logEntity) {

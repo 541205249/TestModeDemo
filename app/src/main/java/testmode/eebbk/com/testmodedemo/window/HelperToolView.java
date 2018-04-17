@@ -83,7 +83,9 @@ public class HelperToolView extends LinearLayout {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalAppDurationNumber = 0;
         long totalAppDuration = 0;
+        int totalTransportDurationNumber = 0;
         long totalTransportDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -102,10 +104,12 @@ public class HelperToolView extends LinearLayout {
                 }
                 case Constant.LogTarget.Helper.APP_DURATION: {
                     totalAppDuration += logEntity.getSpentTime();
+                    totalAppDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.Helper.TRANSPORT_DURATION: {
                     totalTransportDuration += logEntity.getSpentTime();
+                    totalTransportDurationNumber++;
                     break;
                 }
                 default: {
@@ -119,8 +123,8 @@ public class HelperToolView extends LinearLayout {
                 totalNumber,
                 successNumber,
                 failNumber,
-                totalNumber == 0 ? 0 : totalAppDuration / totalNumber,
-                totalNumber == 0 ? 0 : totalTransportDuration / totalNumber));
+                totalAppDurationNumber == 0 ? 0 : totalAppDuration / totalAppDurationNumber,
+                totalTransportDurationNumber == 0 ? 0 : totalTransportDuration / totalTransportDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {

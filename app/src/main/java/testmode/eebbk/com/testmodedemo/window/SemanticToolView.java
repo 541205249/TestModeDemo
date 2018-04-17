@@ -83,6 +83,7 @@ public class SemanticToolView extends LinearLayout {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalDurationNumber = 0;
         long totalDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -101,6 +102,7 @@ public class SemanticToolView extends LinearLayout {
                 }
                 case Constant.LogTarget.Semantic.DURATION: {
                     totalDuration += logEntity.getSpentTime();
+                    totalDurationNumber++;
                     break;
                 }
                 default: {
@@ -115,7 +117,7 @@ public class SemanticToolView extends LinearLayout {
                 successNumber,
                 failNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : totalDuration / totalNumber));
+                totalDurationNumber == 0 ? 0 : totalDuration / totalDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
