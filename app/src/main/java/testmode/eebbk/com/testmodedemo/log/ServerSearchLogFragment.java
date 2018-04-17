@@ -107,7 +107,9 @@ public class ServerSearchLogFragment extends Fragment {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalServerNumber = 0;
         long totalServerDuration = 0;
+        int totalTransportNumber = 0;
         long totalTransportDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -126,10 +128,12 @@ public class ServerSearchLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.ServerSearch.SERVER_DURATION: {
                     totalServerDuration += logEntity.getSpentTime();
+                    totalServerNumber++;
                     break;
                 }
                 case Constant.LogTarget.ServerSearch.TRANSPORT_DURATION: {
                     totalTransportDuration += logEntity.getSpentTime();
+                    totalTransportNumber++;
                     break;
                 }
                 default: {
@@ -144,8 +148,8 @@ public class ServerSearchLogFragment extends Fragment {
                 successNumber,
                 failNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : totalServerDuration / totalNumber,
-                totalNumber == 0 ? 0 : totalTransportDuration / totalNumber));
+                totalServerNumber == 0 ? 0 : totalServerDuration / totalServerNumber,
+                totalTransportNumber == 0 ? 0 : totalTransportDuration / totalTransportNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {

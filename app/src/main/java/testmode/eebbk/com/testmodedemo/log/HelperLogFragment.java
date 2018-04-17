@@ -16,13 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.common.DateUtils;
-
 import java.util.List;
 
+import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.adapter.LogAdapter;
 import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.common.DateUtils;
 import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
@@ -108,7 +107,9 @@ public class HelperLogFragment extends Fragment {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalAppDurationNumber = 0;
         long totalAppDuration = 0;
+        int totalTransportDurationNumber = 0;
         long totalTransportDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -127,10 +128,12 @@ public class HelperLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.Helper.APP_DURATION: {
                     totalAppDuration += logEntity.getSpentTime();
+                    totalAppDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.Helper.TRANSPORT_DURATION: {
                     totalTransportDuration += logEntity.getSpentTime();
+                    totalTransportDurationNumber++;
                     break;
                 }
                 default: {
@@ -144,8 +147,8 @@ public class HelperLogFragment extends Fragment {
                 totalNumber,
                 successNumber,
                 failNumber,
-                totalNumber == 0 ? 0 : totalAppDuration / totalNumber,
-                totalNumber == 0 ? 0 : totalTransportDuration / totalNumber));
+                totalAppDurationNumber == 0 ? 0 : totalAppDuration / totalAppDurationNumber,
+                totalTransportDurationNumber == 0 ? 0 : totalTransportDuration / totalTransportDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {

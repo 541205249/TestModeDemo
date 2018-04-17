@@ -158,8 +158,11 @@ public class SystemWakeLogFragment extends Fragment {
         int successNumber = 0;
         int failNumber = 0;
         int mistakeNumber = 0;
+        int systemTotalDurationNumber = 0;
         long systemTotalDuration = 0;
+        int appTotalDurationNumber = 0;
         long appTotalDuration = 0;
+        int systemWakeTotalDurationNumber = 0;
         long systemWakeTotalDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -182,14 +185,17 @@ public class SystemWakeLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.SystemWake.Black.Voice.SYSTEM_DURATION: {
                     systemTotalDuration += logEntity.getSpentTime();
+                    systemTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Black.Voice.APP_DURATION: {
                     appTotalDuration += logEntity.getSpentTime();
+                    appTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Black.Voice.TOTAL_DURATION: {
                     systemWakeTotalDuration += logEntity.getSpentTime();
+                    systemWakeTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Black.Gesture.SUCCESS: {
@@ -206,14 +212,17 @@ public class SystemWakeLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.SystemWake.Black.Gesture.SYSTEM_DURATION: {
                     systemTotalDuration += logEntity.getSpentTime();
+                    systemTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Black.Gesture.APP_DURATION: {
                     appTotalDuration += logEntity.getSpentTime();
+                    appTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Black.Gesture.TOTAL_DURATION: {
                     systemWakeTotalDuration += logEntity.getSpentTime();
+                    systemWakeTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Lock.Voice.SUCCESS: {
@@ -230,14 +239,17 @@ public class SystemWakeLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.SystemWake.Lock.Voice.SYSTEM_DURATION: {
                     systemTotalDuration += logEntity.getSpentTime();
+                    systemTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Lock.Voice.APP_DURATION: {
                     appTotalDuration += logEntity.getSpentTime();
+                    appTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Lock.Voice.TOTAL_DURATION: {
                     systemWakeTotalDuration += logEntity.getSpentTime();
+                    systemWakeTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Voice.SUCCESS: {
@@ -254,14 +266,17 @@ public class SystemWakeLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.SystemWake.Bright.Voice.SYSTEM_DURATION: {
                     systemTotalDuration += logEntity.getSpentTime();
+                    systemTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Voice.APP_DURATION: {
                     appTotalDuration += logEntity.getSpentTime();
+                    appTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Voice.TOTAL_DURATION: {
                     systemWakeTotalDuration += logEntity.getSpentTime();
+                    systemWakeTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Button.SUCCESS: {
@@ -278,14 +293,17 @@ public class SystemWakeLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.SystemWake.Bright.Button.SYSTEM_DURATION: {
                     systemTotalDuration += logEntity.getSpentTime();
+                    systemTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Button.APP_DURATION: {
                     appTotalDuration += logEntity.getSpentTime();
+                    appTotalDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.SystemWake.Bright.Button.TOTAL_DURATION: {
                     systemWakeTotalDuration += logEntity.getSpentTime();
+                    systemWakeTotalDurationNumber++;
                     break;
                 }
                 default: {
@@ -302,9 +320,9 @@ public class SystemWakeLogFragment extends Fragment {
                 mistakeNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
                 totalNumber == 0 ? 0 : mistakeNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : systemTotalDuration / totalNumber,
-                totalNumber == 0 ? 0 : appTotalDuration / totalNumber,
-                totalNumber == 0 ? 0 : systemWakeTotalDuration / totalNumber));
+                systemTotalDurationNumber == 0 ? 0 : systemTotalDuration / systemTotalDurationNumber,
+                appTotalDurationNumber == 0 ? 0 : appTotalDuration / appTotalDurationNumber,
+                systemWakeTotalDurationNumber == 0 ? 0 : systemWakeTotalDuration / systemWakeTotalDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {

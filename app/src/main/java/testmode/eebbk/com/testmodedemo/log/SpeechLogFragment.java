@@ -108,7 +108,9 @@ public class SpeechLogFragment extends Fragment {
         int totalNumber = 0;
         int successNumber = 0;
         int failNumber = 0;
+        int totalAudioDurationNumber = 0;
         long totalAudioDuration = 0;
+        int totalConvertingDurationNumber = 0;
         long totalConvertingDuration = 0;
 
         for (LogEntity logEntity : logEntities) {
@@ -127,10 +129,12 @@ public class SpeechLogFragment extends Fragment {
                 }
                 case Constant.LogTarget.Speech.AUDIO_DURATION: {
                     totalAudioDuration += logEntity.getSpentTime();
+                    totalAudioDurationNumber++;
                     break;
                 }
                 case Constant.LogTarget.Speech.CONVERTING_DURATION: {
                     totalConvertingDuration += logEntity.getSpentTime();
+                    totalConvertingDurationNumber++;
                     break;
                 }
                 default: {
@@ -145,8 +149,8 @@ public class SpeechLogFragment extends Fragment {
                 successNumber,
                 failNumber,
                 totalNumber == 0 ? 0 : successNumber * 100.0f / totalNumber,
-                totalNumber == 0 ? 0 : totalAudioDuration / totalNumber,
-                totalNumber == 0 ? 0 : totalConvertingDuration / totalNumber));
+                totalAudioDurationNumber == 0 ? 0 : totalAudioDuration / totalAudioDurationNumber,
+                totalConvertingDurationNumber == 0 ? 0 : totalConvertingDuration / totalConvertingDurationNumber));
     }
 
     public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
