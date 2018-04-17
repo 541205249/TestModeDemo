@@ -344,7 +344,7 @@ public class FloatLayout extends FrameLayout {
                 mDisplayToolView.updateStatistics();
                 if (SettingManager.getInstance(getContext()).isAutoJump()) {
                     openToolView(mDisplayToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_CONTENT;
+                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_DISPLAY;
                     mModuleAdapter.notifyDataSetChanged();
                 }
             }
