@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class AudioToolView extends LinearLayout {
         mDecibelBtn = findViewById(R.id.tool_audio_decibel_btn);
 
         mDecibelBtn.setOnClickListener(v -> {
-            // TODO: 2018/4/11
+            // TODO: 2018/4/11 暂不支持
+            Toast.makeText(getContext(), "暂不支持，功能待开发", Toast.LENGTH_SHORT).show();
         });
 
         updateStatistics();

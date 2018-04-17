@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -71,7 +72,8 @@ public class AudioLogFragment extends Fragment {
         mLogRv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mDecibelBtn.setOnClickListener(v -> {
-            // TODO: 2018/4/11
+            // TODO: 2018/4/11 暂不支持
+            Toast.makeText(getActivity(), "暂不支持，功能待开发", Toast.LENGTH_SHORT).show();
         });
 
         updateStatistics();
