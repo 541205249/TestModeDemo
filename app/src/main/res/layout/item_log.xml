@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:lineSpacingExtra="2dp"
-        android:textColor="@color/heavy_transparent_black"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
     <ImageButton

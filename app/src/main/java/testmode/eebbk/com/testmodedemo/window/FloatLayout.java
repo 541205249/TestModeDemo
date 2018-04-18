@@ -1,9 +1,12 @@
 package testmode.eebbk.com.testmodedemo.window;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,49 +17,41 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.common.Constant;
-import testmode.eebbk.com.testmodedemo.common.LogFormatUtil;
+import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
-import testmode.eebbk.com.testmodedemo.setting.SettingManager;
+import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
+import testmode.eebbk.com.testmodedemo.model.TargetEntity;
 
 /**
  * @author LiXiaoFeng
- * @date 2018/4/10
- * <p>
- * 悬浮窗布局
+ * @date 2018/4/18
  */
 public class FloatLayout extends FrameLayout {
+    private static final String TAG = FloatLayout.class.getSimpleName();
     private final WindowManager mWindowManager;
     private float mTouchStartX;
     private float mTouchStartY;
     private WindowManager.LayoutParams mWmParams;
     private ImageButton mMoveIbtn;
     private ImageButton mShowIbtn;
+    private ImageButton mRefreshIbtn;
     private ImageButton mCloseIbtn;
     private TextView mLogTv;
     private LinearLayout mToolLinearLayout;
     private ListView mModuleLv;
-    private ScrollView mToolContainerSv;
-    private ArrayAdapter<String> mModuleAdapter;
-    private SystemWakeToolView mSystemWakeToolView;
-    private AppWakeToolView mAppWakeToolView;
-    private AudioToolView mAudioToolView;
-    private SpeechToolView mSpeechToolView;
-    private SemanticToolView mSemanticToolView;
-    private OrderDistributionToolView mOrderDistributionToolView;
-    private ServerSearchToolView mServerSearchToolView;
-    private ContentToolView mContentToolView;
-    private DisplayToolView mDisplayToolView;
-    private HelperToolView mHelperToolView;
-    private int mCurrentSelectPosition;
+    private LinearLayout mContainerLinearLayout;
+    private ArrayAdapter<ModuleEntity> mModuleAdapter;
+    private HashMap<String, ToolView> mToolViewMap = new HashMap<>();
+    private ModuleEntity mCurrentModuleEntity;
     private boolean isVisible;
+    private DataRepository.DataChangeBroadcastReceiver mDataChangeBroadcastReceiver;
 
     public FloatLayout(Context context) {
         this(context, null);
@@ -65,6 +60,56 @@ public class FloatLayout extends FrameLayout {
     public FloatLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mDataChangeBroadcastReceiver = new DataRepository.DataChangeBroadcastReceiver() {
+            @Override
+            protected void onInsertLogEntity(Context context, LogEntity logEntity) {
+                if (logEntity == null) {
+                    return;
+                }
+
+                showNewestLog(logEntity);
+                List<ModuleEntity> moduleEntities = DataRepository.getInstance().getRootModuleEntities();
+                for (ModuleEntity moduleEntity : moduleEntities) {
+                    if (logEntity.getTarget().startsWith(moduleEntity.getName())) {
+                        openToolView(moduleEntity);
+                        mCurrentModuleEntity = moduleEntity;
+                        mModuleAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            protected void onRemoveLogEntity(Context context, LogEntity logEntity) {
+                if (logEntity == null) {
+                    return;
+                }
+
+                showNewestLog(logEntity);
+                List<LogEntity> logEntities = DataRepository.getInstance().getData(null);
+                if (logEntities.isEmpty()) {
+                    showNewestLog(null);
+                } else {
+                    LogEntity preLogEntity = logEntities.get(0);
+                    showNewestLog(preLogEntity);
+                    List<ModuleEntity> moduleEntities = DataRepository.getInstance().getRootModuleEntities();
+                    for (ModuleEntity moduleEntity : moduleEntities) {
+                        if (preLogEntity.getTarget().startsWith(moduleEntity.getName())) {
+                            openToolView(moduleEntity);
+                            mCurrentModuleEntity = moduleEntity;
+                            mModuleAdapter.notifyDataSetChanged();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            protected void onRefreshData(Context context) {
+                showNewestLog(null);
+            }
+        };
+
         initView(context);
     }
 
@@ -72,31 +117,34 @@ public class FloatLayout extends FrameLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.float_window_layout, this);
         mMoveIbtn = (ImageButton) view.findViewById(R.id.float_move_ibtn);
         mShowIbtn = (ImageButton) view.findViewById(R.id.float_show_ibtn);
+        mRefreshIbtn = (ImageButton) view.findViewById(R.id.float_refresh_ibtn);
         mCloseIbtn = (ImageButton) view.findViewById(R.id.float_close_ibtn);
         mLogTv = (TextView) view.findViewById(R.id.float_log_tv);
         mToolLinearLayout = (LinearLayout) view.findViewById(R.id.float_tool_ll);
         mModuleLv = (ListView) view.findViewById(R.id.float_module_lv);
-        mToolContainerSv = (ScrollView) view.findViewById(R.id.float_tool_container_sv);
+        mContainerLinearLayout = (LinearLayout) view.findViewById(R.id.float_container_ll);
 
-        mModuleAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, Constant.Module.MODULES) {
+        mModuleAdapter = new ArrayAdapter<ModuleEntity>(context, android.R.layout.simple_list_item_1, DataRepository.getInstance().getRootModuleEntities()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
                 textView.setTextColor(getResources().getColor(R.color.white));
-                if (position == mCurrentSelectPosition) {
+                ModuleEntity moduleEntity = mModuleAdapter.getItem(position);
+                if (mCurrentModuleEntity == moduleEntity) {
                     textView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
                 } else {
                     textView.setBackgroundColor(getResources().getColor(R.color.transparent_black));
                 }
+                textView.setText(moduleEntity.getName());
                 return textView;
             }
-
         };
         mModuleLv.setOnItemClickListener((parent, v, position, id) -> {
-            mCurrentSelectPosition = position;
+            ModuleEntity moduleEntity = mModuleAdapter.getItem(position);
+            mCurrentModuleEntity = moduleEntity;
             mModuleAdapter.notifyDataSetChanged();
-            openToolView(position);
+            openToolView(moduleEntity);
         });
         mModuleLv.setAdapter(mModuleAdapter);
 
@@ -130,121 +178,68 @@ public class FloatLayout extends FrameLayout {
             isVisible = !isVisible;
             mToolLinearLayout.setVisibility(isVisible ? VISIBLE : GONE);
         });
+        mRefreshIbtn.setOnClickListener(v -> {
+            DataRepository.getInstance().refreshData();
+        });
         mCloseIbtn.setOnClickListener(v -> {
             FloatWindowController.getInstance().close();
         });
+
         List<LogEntity> data = DataRepository.getInstance().getData(null);
         if (data == null || data.isEmpty()) {
             showNewestLog(null);
         } else {
             showNewestLog(data.get(0));
         }
-        mCurrentSelectPosition = 0;
-        openToolView(mCurrentSelectPosition);
+        mCurrentModuleEntity = mModuleAdapter.getItem(0);
+        openToolView(mCurrentModuleEntity);
     }
 
-    private void openToolView(int position) {
-        View view = null;
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        registerDataBroadcastReceiver();
+        Log.i(TAG, this.toString() + " onAttachedToWindow");
+    }
 
-        switch (position) {
-            case Constant.Module.INDEX_MODULE_SYSTEM_WAKE: {
-                if (mSystemWakeToolView == null) {
-                    mSystemWakeToolView = new SystemWakeToolView(getContext());
-                    mSystemWakeToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mSystemWakeToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_APP_WAKE: {
-                if (mAppWakeToolView == null) {
-                    mAppWakeToolView = new AppWakeToolView(getContext());
-                    mAppWakeToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mAppWakeToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_AUDIO: {
-                if (mAudioToolView == null) {
-                    mAudioToolView = new AudioToolView(getContext());
-                    mAudioToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mAudioToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_SPEECH: {
-                if (mSpeechToolView == null) {
-                    mSpeechToolView = new SpeechToolView(getContext());
-                    mSpeechToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mSpeechToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_SEMANTICS: {
-                if (mSemanticToolView == null) {
-                    mSemanticToolView = new SemanticToolView(getContext());
-                    mSemanticToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mSemanticToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_ORDER_DISTRIBUTION: {
-                if (mOrderDistributionToolView == null) {
-                    mOrderDistributionToolView = new OrderDistributionToolView(getContext());
-                    mOrderDistributionToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mOrderDistributionToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_SERVER_SEARCH: {
-                if (mServerSearchToolView == null) {
-                    mServerSearchToolView = new ServerSearchToolView(getContext());
-                    mServerSearchToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mServerSearchToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_CONTENT: {
-                if (mContentToolView == null) {
-                    mContentToolView = new ContentToolView(getContext());
-                    mContentToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mContentToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_DISPLAY: {
-                if (mDisplayToolView == null) {
-                    mDisplayToolView = new DisplayToolView(getContext());
-                }
-                view = mDisplayToolView;
-                break;
-            }
-            case Constant.Module.INDEX_MODULE_HELPER: {
-                if (mHelperToolView == null) {
-                    mHelperToolView = new HelperToolView(getContext());
-                    mHelperToolView.setOnInsertLogEntityListener(logEntity -> showNewestLog(logEntity));
-                }
-                view = mHelperToolView;
-                break;
-            }
-            default: {
-                break;
+    private void registerDataBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        List<ModuleEntity> moduleEntities = DataRepository.getInstance().getRootModuleEntities();
+        for (ModuleEntity moduleEntity : moduleEntities) {
+            List<TargetEntity> targetEntities = DataRepository.getInstance().getTargetEntities(moduleEntity);
+            for (TargetEntity targetEntity : targetEntities) {
+                intentFilter.addAction(targetEntity.getFullName());
             }
         }
-
-        openToolView(view);
+        intentFilter.addAction(DataRepository.ACTION_REFRESH_LOG_ENTITY);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mDataChangeBroadcastReceiver, intentFilter);
     }
 
-    private void openToolView(View view) {
-        if (view == null) {
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mDataChangeBroadcastReceiver);
+        Log.i(TAG, this.toString() + " onDetachedFormWindow");
+    }
+
+    private void openToolView(ModuleEntity moduleEntity) {
+        if (moduleEntity == null) {
             return;
         }
 
-        if (mToolContainerSv.getChildCount() != 0 && mToolContainerSv.getChildAt(0) == view) {
+        if (mContainerLinearLayout.getChildCount() != 0 && mContainerLinearLayout.getChildAt(0).getTag().equals(moduleEntity.getName())) {
             return;
         }
 
-        mToolContainerSv.removeAllViews();
-        mToolContainerSv.addView(view);
+        ToolView toolView = mToolViewMap.get(moduleEntity.getName());
+        if (toolView == null) {
+            toolView = new ToolView(getContext());
+            toolView.setModuleEntity(moduleEntity);
+            toolView.setTag(moduleEntity.getName());
+        }
+
+        mContainerLinearLayout.removeAllViews();
+        mContainerLinearLayout.addView(toolView);
     }
 
     public void setParams(WindowManager.LayoutParams params) {
@@ -258,105 +253,5 @@ public class FloatLayout extends FrameLayout {
         }
 
         mLogTv.setText(LogFormatUtil.format(logEntity));
-    }
-
-    public void onLogInsert(LogEntity logEntity) {
-        if (logEntity == null) {
-            return;
-        }
-
-        showNewestLog(logEntity);
-
-        if (Constant.LogTarget.SystemWake.FILTER.accept(logEntity.getTarget())) {
-            if (mSystemWakeToolView != null) {
-                mSystemWakeToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mSystemWakeToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_SYSTEM_WAKE;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.AppWake.FILTER.accept(logEntity.getTarget())) {
-            if (mAppWakeToolView != null) {
-                mAppWakeToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mAppWakeToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_APP_WAKE;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Audio.FILTER.accept(logEntity.getTarget())) {
-            if (mAudioToolView != null) {
-                mAudioToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mAudioToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_AUDIO;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Speech.FILTER.accept(logEntity.getTarget())) {
-            if (mSpeechToolView != null) {
-                mSpeechToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mSpeechToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_SPEECH;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Semantic.FILTER.accept(logEntity.getTarget())) {
-            if (mSemanticToolView != null) {
-                mSemanticToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mSemanticToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_SEMANTICS;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.OrderDistribution.FILTER.accept(logEntity.getTarget())) {
-            if (mOrderDistributionToolView != null) {
-                mOrderDistributionToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mOrderDistributionToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_ORDER_DISTRIBUTION;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.ServerSearch.FILTER.accept(logEntity.getTarget())) {
-            if (mServerSearchToolView != null) {
-                mServerSearchToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mServerSearchToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_SERVER_SEARCH;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Content.FILTER.accept(logEntity.getTarget())) {
-            if (mContentToolView != null) {
-                mContentToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mContentToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_CONTENT;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Display.FILTER.accept(logEntity.getTarget())) {
-            if (mDisplayToolView != null) {
-                mDisplayToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mDisplayToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_DISPLAY;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        } else if (Constant.LogTarget.Helper.FILTER.accept(logEntity.getTarget())) {
-            if (mHelperToolView != null) {
-                mHelperToolView.updateStatistics();
-                if (SettingManager.getInstance(getContext()).isAutoJump()) {
-                    openToolView(mHelperToolView);
-                    mCurrentSelectPosition = Constant.Module.INDEX_MODULE_HELPER;
-                    mModuleAdapter.notifyDataSetChanged();
-                }
-            }
-        }
     }
 }

@@ -16,10 +16,11 @@ public class ModuleEntity {
     private List<ModuleEntity> moduleEntities;
     private List<TargetEntity> targetEntities;
 
-    public ModuleEntity(String name, ModuleEntity parent) {
+    ModuleEntity(String name, ModuleEntity parent) {
         this.name = name;
         this.parent = parent;
         this.id = UUID.randomUUID().toString();
+        this.isEnd = true;
         this.moduleEntities = new ArrayList<>();
         this.targetEntities = new ArrayList<>();
     }
@@ -33,27 +34,36 @@ public class ModuleEntity {
     }
 
     public List<ModuleEntity> getModuleEntities() {
-        return moduleEntities;
+        List<ModuleEntity> result = new ArrayList<>();
+        result.addAll(moduleEntities);
+        return result;
     }
 
     public List<TargetEntity> getTargetEntities() {
-        return targetEntities;
+        List<TargetEntity> result = new ArrayList<>();
+        result.addAll(targetEntities);
+        return result;
     }
 
-    public void setTargetEntities(List<TargetEntity> targetEntities) {
-        this.targetEntities = targetEntities;
+    public void addTargetEntity(TargetEntity targetEntity) {
+        if (targetEntity == null) {
+            return;
+        }
+
+        targetEntities.add(targetEntity);
     }
 
-    public void setModuleEntities(List<ModuleEntity> moduleEntities) {
-        this.moduleEntities = moduleEntities;
+    public void addModuleEntity(ModuleEntity moduleEntity) {
+        if (moduleEntity == null) {
+            return;
+        }
+
+        moduleEntities.add(moduleEntity);
+        isEnd = false;
     }
 
     public boolean isEnd() {
         return isEnd;
-    }
-
-    public void setEnd(boolean end) {
-        isEnd = end;
     }
 
     public String getId() {

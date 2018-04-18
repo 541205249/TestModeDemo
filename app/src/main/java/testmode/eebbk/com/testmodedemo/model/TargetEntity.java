@@ -13,7 +13,7 @@ public class TargetEntity {
     private ModuleEntity parent;
     private String fullName;
 
-    public TargetEntity(String name, String fullName, boolean isAddition, ModuleEntity parent) {
+    TargetEntity(String name, String fullName, boolean isAddition, ModuleEntity parent) {
         this.name = name;
         this.fullName = fullName;
         this.isAddition = isAddition;

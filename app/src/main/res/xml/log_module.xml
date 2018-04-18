@@ -5,10 +5,10 @@
             <Module name="语音唤醒">
                 <Target
                     name="成功"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="失败"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="误唤醒"
                     addition="true" />
@@ -25,10 +25,10 @@
             <Module name="手势唤醒">
                 <Target
                     name="成功"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="失败"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="误唤醒"
                     addition="true" />
@@ -47,10 +47,10 @@
             <Module name="语音唤醒">
                 <Target
                     name="成功"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="失败"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="误唤醒"
                     addition="true" />
@@ -69,10 +69,10 @@
             <Module name="语音唤醒">
                 <Target
                     name="成功"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="失败"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="误唤醒"
                     addition="true" />
@@ -89,10 +89,10 @@
             <Module name="按键唤醒">
                 <Target
                     name="成功"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="失败"
-                    addition="true" />
+                    addition="false" />
                 <Target
                     name="误唤醒"
                     addition="true" />
@@ -112,10 +112,10 @@
         <Module name="语音唤醒">
             <Target
                 name="成功"
-                addition="true" />
+                addition="false" />
             <Target
                 name="失败"
-                addition="true" />
+                addition="false" />
             <Target
                 name="误唤醒"
                 addition="true" />
@@ -126,10 +126,10 @@
         <Module name="按键唤醒">
             <Target
                 name="成功"
-                addition="true" />
+                addition="false" />
             <Target
                 name="失败"
-                addition="true" />
+                addition="false" />
             <Target
                 name="误唤醒"
                 addition="true" />
@@ -221,9 +221,9 @@
             addition="true" />
         <Target
             name="其他应用响应平均耗时"
-            addition="true" />
+            addition="false" />
         <Target
             name="空中传输耗时"
-            addition="true" />
+            addition="false" />
     </Module>
 </LogModule>

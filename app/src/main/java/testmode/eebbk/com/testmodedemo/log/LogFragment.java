@@ -1,9 +1,7 @@
 package testmode.eebbk.com.testmodedemo.log;
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,23 +21,23 @@ import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.common.Constant;
-import testmode.eebbk.com.testmodedemo.common.DateUtils;
-import testmode.eebbk.com.testmodedemo.common.LogFilter;
-import testmode.eebbk.com.testmodedemo.common.LogFormatUtil;
-import testmode.eebbk.com.testmodedemo.common.LogStatistician;
-import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
+import testmode.eebbk.com.testmodedemo.filter.LogFilter;
+import testmode.eebbk.com.testmodedemo.filter.LogFilterFactory;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
+import testmode.eebbk.com.testmodedemo.util.DateUtils;
+import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.model.TargetEntity;
-import testmode.eebbk.com.testmodedemo.setting.SettingManager;
 
 /**
  * @author LiXiaoFeng
  * @date 2018/4/17
  */
-public abstract class LogFragment extends Fragment {
-    protected static final String KEY_MODULE_ENTITY_ID = "module_entity_id";
+public class LogFragment extends Fragment {
+    private static final String KEY_MODULE_ENTITY_ID = "module_entity_id";
     private ModuleEntity mModuleEntity;
     private List<TargetEntity> mTargetEntities;
     private LogAdapter mLogAdapter;
@@ -49,8 +47,19 @@ public abstract class LogFragment extends Fragment {
     private RecyclerView mToolRv;
     private LogFilter mLogFilter;
     private LogStatistician mLogStatistician;
-    private OnInsertLogEntityListener mOnInsertLogEntityListener;
-    private LogBroadcastReceiver mLogBroadcastReceiver;
+    private DataRepository.DataChangeBroadcastReceiver mDataChangeBroadcastReceiver;
+
+    public static LogFragment newInstance(ModuleEntity moduleEntity) {
+        if (moduleEntity == null) {
+            return null;
+        }
+
+        LogFragment logFragment = new LogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_MODULE_ENTITY_ID, moduleEntity.getId());
+        logFragment.setArguments(bundle);
+        return logFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +72,6 @@ public abstract class LogFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log, container, false);
-        initData();
         initView(view);
         return view;
     }
@@ -92,37 +100,66 @@ public abstract class LogFragment extends Fragment {
     }
 
     private void initData() {
-        mLogFilter = generateLogFilter();
-        mLogStatistician = generateLogStatistician();
         mModuleEntity = DataRepository.getInstance().getModuleEntity(getArguments().getString(KEY_MODULE_ENTITY_ID));
+        mLogFilter = LogFilterFactory.produceLogFilter(mModuleEntity);
+        mLogStatistician = LogStatisticianFactory.produceLogStatistician(mModuleEntity);
         mTargetEntities = DataRepository.getInstance().getTargetEntities(mModuleEntity);
     }
 
     private void initLogBroadcastReceiver() {
-        mLogBroadcastReceiver = generateLogBroadcastReceiver();
+        mDataChangeBroadcastReceiver = new DataRepository.DataChangeBroadcastReceiver() {
+            @Override
+            protected void onInsertLogEntity(Context context, LogEntity logEntity) {
+                if (logEntity == null) {
+                    return;
+                }
+                int position = mLogAdapter.insertData(logEntity);
+                if (position == -1) {
+                    return;
+                }
+
+                mLogAdapter.notifyItemInserted(position);
+                mLogRv.scrollToPosition(position);
+                updateStatistics();
+            }
+
+            @Override
+            protected void onRemoveLogEntity(Context context, LogEntity logEntity) {
+                if (logEntity == null) {
+                    return;
+                }
+                int position = mLogAdapter.insertData(logEntity);
+                if (position == -1) {
+                    return;
+                }
+                mLogAdapter.notifyItemInserted(position);
+                mLogRv.scrollToPosition(position);
+                updateStatistics();
+            }
+
+            @Override
+            protected void onRefreshData(Context context) {
+                mLogAdapter.refreshData();
+                mLogAdapter.notifyDataSetChanged();
+                updateStatistics();
+            }
+        };
         IntentFilter intentFilter = new IntentFilter();
         for (TargetEntity targetEntity : mTargetEntities) {
             intentFilter.addAction(targetEntity.getFullName());
         }
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mLogBroadcastReceiver, intentFilter);
+        intentFilter.addAction(DataRepository.getInstance().ACTION_REFRESH_LOG_ENTITY);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mDataChangeBroadcastReceiver, intentFilter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mLogBroadcastReceiver);
-    }
-
-    protected abstract LogFilter generateLogFilter();
-
-    protected abstract LogStatistician generateLogStatistician();
-
-    protected LogBroadcastReceiver generateLogBroadcastReceiver() {
-        return new LogBroadcastReceiver();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDataChangeBroadcastReceiver);
     }
 
     private void updateStatistics() {
-        String statistics = mLogStatistician.statistcis(DataRepository.getInstance().getData(mLogFilter));
+        String statistics = mLogStatistician.statistics(mModuleEntity, DataRepository.getInstance().getData(mLogFilter));
         mStatisticsTv.setText(statistics);
     }
 
@@ -205,6 +242,10 @@ public abstract class LogFragment extends Fragment {
 
             return -1;
         }
+
+        public void refreshData() {
+            mLogEntities.clear();
+        }
     }
 
     private static class LogViewHolder extends RecyclerView.ViewHolder {
@@ -227,11 +268,12 @@ public abstract class LogFragment extends Fragment {
 
         @Override
         public ToolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            ToolViewHolder holder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tool, parent, false));
+            ToolViewHolder holder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log_tool, parent, false));
             holder.mToolBtn.setOnClickListener(v -> {
                 LogEntity logEntity = new LogEntity();
-                logEntity.setTarget(mTargetEntities.get(holder.getAdapterPosition()).getName());
+                logEntity.setTarget(mTargetEntities.get(holder.getAdapterPosition()).getFullName());
                 logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
+                DataRepository.getInstance().insertData(logEntity);
             });
             return holder;
         }
@@ -263,63 +305,7 @@ public abstract class LogFragment extends Fragment {
         public ToolViewHolder(View itemView) {
             super(itemView);
 
-            mToolBtn = itemView.findViewById(R.id.tool_btn);
-        }
-    }
-
-    public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
-        mOnInsertLogEntityListener = onInsertLogEntityListener;
-    }
-
-    protected class LogBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            LogEntity logEntity = intent.getParcelableExtra(DataRepository.KEY_LOG_ENTITY);
-            int changeType = intent.getIntExtra(DataRepository.KEY_CHANGE_TYPE, DataRepository.CHANGE_TYPE_INVALID);
-
-            if (logEntity == null) {
-                return;
-            }
-
-            if (changeType == DataRepository.CHANGE_TYPE_INSERT) {
-                onInsertEntity(logEntity);
-            } else if (changeType == DataRepository.CHANGE_TYPE_REMOVE) {
-                onRemoveEntity(logEntity);
-            }
-        }
-
-        protected void onInsertEntity(LogEntity logEntity) {
-            if (logEntity == null) {
-                return;
-            }
-
-            int position = mLogAdapter.insertData(logEntity);
-            if (position == -1) {
-                return;
-            }
-
-            if (mOnInsertLogEntityListener != null) {
-                mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
-            }
-
-            mLogAdapter.notifyItemInserted(position);
-            if (SettingManager.getInstance(getContext()).isAutoScroll()) {
-                mLogRv.scrollToPosition(position);
-            }
-            updateStatistics();
-        }
-
-        protected void onRemoveEntity(LogEntity logEntity) {
-            if (logEntity == null) {
-                return;
-            }
-
-            int position = mLogAdapter.removeData(logEntity);
-            if (position == -1) {
-                return;
-            }
-            mLogAdapter.notifyItemRemoved(position);
-            updateStatistics();
+            mToolBtn = itemView.findViewById(R.id.log_tool_btn);
         }
     }
 }
