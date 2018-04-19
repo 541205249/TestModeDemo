@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import jxl.Cell;
-import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.Colour;
 import jxl.read.biff.BiffException;
@@ -26,7 +25,6 @@ import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class ExcelUtil {
-    private static final String TAG = ExcelUtil.class.getSimpleName();
     private static final String EXCEL_FILE_NAME = "指标测试结果.xls";
     private static final String[] EXCEL_TITLE = {"指标项", "耗时", "值", "方法名", "描述", "标签", "入表时间", "ID"};
     private static final String SHEET_NAME = "业务指标";

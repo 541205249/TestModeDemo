@@ -12,8 +12,8 @@
 
         <ImageButton
             android:id="@+id/float_move_ibtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_margin="8dp"
             android:background="@null"
             android:scaleType="fitXY"
@@ -21,8 +21,8 @@
 
         <ImageButton
             android:id="@+id/float_close_ibtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
             android:background="@null"
@@ -30,14 +30,23 @@
             android:src="@drawable/icon_close" />
 
         <ImageButton
-            android:id="@+id/float_show_ibtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/float_refresh_ibtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_margin="8dp"
             android:layout_toLeftOf="@id/float_close_ibtn"
             android:background="@null"
             android:scaleType="fitXY"
+            android:src="@drawable/icon_refresh" />
 
+        <ImageButton
+            android:id="@+id/float_show_ibtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:layout_toLeftOf="@id/float_refresh_ibtn"
+            android:background="@null"
+            android:scaleType="fitXY"
             android:src="@drawable/icon_visible" />
     </RelativeLayout>
 
@@ -67,19 +76,19 @@
     <LinearLayout
         android:id="@+id/float_tool_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:layout_below="@id/separate_view_2"
         android:orientation="horizontal">
 
         <ListView
             android:id="@+id/float_module_lv"
             android:layout_width="100dp"
-            android:layout_height="500dp" />
+            android:layout_height="match_parent" />
 
-        <ScrollView
-            android:id="@+id/float_tool_container_sv"
+        <LinearLayout
+            android:id="@+id/float_container_ll"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@color/heavy_transparent_black" />
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
     </LinearLayout>
 </RelativeLayout>

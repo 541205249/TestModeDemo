@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     package="testmode.eebbk.com.testmodedemo">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -22,14 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.SettingActivity" />
         <activity android:name=".log.LogActivity" />
 
         <service android:name=".excel.ExcelIntentService" />
 
         <receiver android:name=".TestBroadCastReceiver">
             <intent-filter>
-                <action android:name="com.suidadabian.lixiaofeng.aop.testmode.action" />
+                <action android:name="com.eebbk.askhomework.testmode.action" />
             </intent-filter>
             <meta-data
                 android:name="test_app_name"
