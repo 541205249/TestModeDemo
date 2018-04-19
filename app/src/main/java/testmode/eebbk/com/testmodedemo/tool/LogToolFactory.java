@@ -13,25 +13,27 @@ import testmode.eebbk.com.testmodedemo.util.DateUtils;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/19
+ *
+ * 测试项工具静态工厂
  */
-public class ToolFactory {
-    private ToolFactory() {
+public class LogToolFactory {
+    private LogToolFactory() {
 
     }
 
-    public static Tool produceTool(TargetEntity target) {
+    public static LogTool produceTool(TargetEntity target) {
         if (target == null) {
             return null;
         }
 
-        Tool tool;
+        LogTool logTool;
 
         if (target.getFullName().equals(LogModule.Audio.DECIBEL)) {
-            tool = targetEntity -> {
+            logTool = targetEntity -> {
                 Toast.makeText(TestModeApplication.getTestModeApplicationContext(), "功能待开发", Toast.LENGTH_SHORT).show();
             };
         } else {
-            tool = targetEntity -> {
+            logTool = targetEntity -> {
                 LogEntity logEntity = new LogEntity();
                 logEntity.setTarget(targetEntity.getFullName());
                 logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
@@ -40,6 +42,6 @@ public class ToolFactory {
             ;
         }
 
-        return tool;
+        return logTool;
     }
 }

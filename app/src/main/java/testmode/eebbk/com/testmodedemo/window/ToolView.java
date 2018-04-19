@@ -26,7 +26,7 @@ import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.model.TargetEntity;
 import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
 import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
-import testmode.eebbk.com.testmodedemo.tool.ToolFactory;
+import testmode.eebbk.com.testmodedemo.tool.LogToolFactory;
 
 /**
  * @author LiXiaoFeng
@@ -144,7 +144,7 @@ public class ToolView extends LinearLayout {
             ToolViewHolder toolViewHolder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tool_tool, parent, false));
             toolViewHolder.mToolBtn.setOnClickListener(v -> {
                 TargetEntity targetEntity = mTargetEntities.get(toolViewHolder.getAdapterPosition());
-                ToolFactory.produceTool(targetEntity).function(targetEntity);
+                LogToolFactory.produceTool(targetEntity).function(targetEntity);
             });
             return toolViewHolder;
         }

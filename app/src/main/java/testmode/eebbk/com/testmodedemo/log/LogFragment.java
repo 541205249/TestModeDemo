@@ -28,7 +28,7 @@ import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.model.TargetEntity;
 import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
 import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
-import testmode.eebbk.com.testmodedemo.tool.ToolFactory;
+import testmode.eebbk.com.testmodedemo.tool.LogToolFactory;
 import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 
 /**
@@ -269,7 +269,7 @@ public class LogFragment extends Fragment {
             ToolViewHolder holder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log_tool, parent, false));
             holder.mToolBtn.setOnClickListener(v -> {
                 TargetEntity targetEntity = mTargetEntities.get(holder.getAdapterPosition());
-                ToolFactory.produceTool(targetEntity).function(targetEntity);
+                LogToolFactory.produceTool(targetEntity).function(targetEntity);
             });
             return holder;
         }
