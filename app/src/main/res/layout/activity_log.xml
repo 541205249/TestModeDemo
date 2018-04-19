@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <ListView
-        android:id="@+id/log_type"
+        android:id="@+id/log_module_lv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
@@ -13,11 +13,11 @@
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="#bf8f8f8f" />
+        android:background="@color/black" />
 
     <FrameLayout
-        android:id="@+id/log_container"
+        android:id="@+id/log_container_fl"
         android:layout_width="500dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 </LinearLayout>

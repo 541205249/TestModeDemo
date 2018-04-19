@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LogModule>
+    <Module name="系统唤醒">
+        <Module name="黑屏">
+            <Module name="语音唤醒">
+                <Target
+                    name="成功"
+                    addition="false" />
+                <Target
+                    name="失败"
+                    addition="false" />
+                <Target
+                    name="误唤醒"
+                    addition="true" />
+                <Target
+                    name="系统处理耗时"
+                    addition="false" />
+                <Target
+                    name="应用响应耗时"
+                    addition="false" />
+                <Target
+                    name="系统唤醒总耗时"
+                    addition="false" />
+            </Module>
+            <Module name="手势唤醒">
+                <Target
+                    name="成功"
+                    addition="false" />
+                <Target
+                    name="失败"
+                    addition="false" />
+                <Target
+                    name="误唤醒"
+                    addition="true" />
+                <Target
+                    name="系统处理耗时"
+                    addition="false" />
+                <Target
+                    name="应用响应耗时"
+                    addition="false" />
+                <Target
+                    name="系统唤醒总耗时"
+                    addition="false" />
+            </Module>
+        </Module>
+        <Module name="锁屏">
+            <Module name="语音唤醒">
+                <Target
+                    name="成功"
+                    addition="false" />
+                <Target
+                    name="失败"
+                    addition="false" />
+                <Target
+                    name="误唤醒"
+                    addition="true" />
+                <Target
+                    name="系统处理耗时"
+                    addition="false" />
+                <Target
+                    name="应用响应耗时"
+                    addition="false" />
+                <Target
+                    name="系统唤醒总耗时"
+                    addition="false" />
+            </Module>
+        </Module>
+        <Module name="亮屏">
+            <Module name="语音唤醒">
+                <Target
+                    name="成功"
+                    addition="false" />
+                <Target
+                    name="失败"
+                    addition="false" />
+                <Target
+                    name="误唤醒"
+                    addition="true" />
+                <Target
+                    name="系统处理耗时"
+                    addition="false" />
+                <Target
+                    name="应用响应耗时"
+                    addition="false" />
+                <Target
+                    name="系统唤醒总耗时"
+                    addition="false" />
+            </Module>
+            <Module name="按键唤醒">
+                <Target
+                    name="成功"
+                    addition="false" />
+                <Target
+                    name="失败"
+                    addition="false" />
+                <Target
+                    name="误唤醒"
+                    addition="true" />
+                <Target
+                    name="系统处理耗时"
+                    addition="false" />
+                <Target
+                    name="应用响应耗时"
+                    addition="false" />
+                <Target
+                    name="系统唤醒总耗时"
+                    addition="false" />
+            </Module>
+        </Module>
+    </Module>
+    <Module name="应用内唤醒">
+        <Module name="语音唤醒">
+            <Target
+                name="成功"
+                addition="false" />
+            <Target
+                name="失败"
+                addition="false" />
+            <Target
+                name="误唤醒"
+                addition="true" />
+            <Target
+                name="应用内唤醒耗时"
+                addition="false" />
+        </Module>
+        <Module name="按键唤醒">
+            <Target
+                name="成功"
+                addition="false" />
+            <Target
+                name="失败"
+                addition="false" />
+            <Target
+                name="误唤醒"
+                addition="true" />
+            <Target
+                name="应用内唤醒耗时"
+                addition="false" />
+        </Module>
+    </Module>
+    <Module name="音频">
+        <Target
+            name="分贝"
+            addition="true" />
+        <Target
+            name="采样率"
+            addition="false" />
+    </Module>
+    <Module name="语音识别">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+        <Target
+            name="语音时长"
+            addition="false" />
+        <Target
+            name="语音即时转换文本耗时"
+            addition="false" />
+    </Module>
+    <Module name="语义理解">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+        <Target
+            name="语义理解耗时"
+            addition="false" />
+    </Module>
+    <Module name="APP指令分发">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+        <Target
+            name="APP命令及参数解析平均耗时"
+            addition="false" />
+        <Target
+            name="空中传输耗时"
+            addition="false" />
+    </Module>
+    <Module name="后台搜索">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+        <Target
+            name="后台搜索耗时"
+            addition="false" />
+        <Target
+            name="空中传输耗时"
+            addition="false" />
+    </Module>
+    <Module name="内容">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+    </Module>
+    <Module name="APP端页面展示">
+        <Target
+            name="APP页面展示耗时"
+            addition="false" />
+    </Module>
+    <Module name="作业助手">
+        <Target
+            name="成功"
+            addition="true" />
+        <Target
+            name="失败"
+            addition="true" />
+        <Target
+            name="其他应用响应平均耗时"
+            addition="false" />
+        <Target
+            name="空中传输耗时"
+            addition="false" />
+    </Module>
+</LogModule>

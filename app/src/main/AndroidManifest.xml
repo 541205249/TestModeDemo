@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.SettingActivity" />
         <activity android:name=".log.LogActivity" />
 
         <service android:name=".excel.ExcelIntentService" />
