@@ -18,17 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.common.Constant;
-import testmode.eebbk.com.testmodedemo.common.OnInsertLogEntityListener;
 import testmode.eebbk.com.testmodedemo.filter.LogFilter;
 import testmode.eebbk.com.testmodedemo.filter.LogFilterFactory;
-import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
-import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
-import testmode.eebbk.com.testmodedemo.util.DateUtils;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.model.TargetEntity;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
+import testmode.eebbk.com.testmodedemo.tool.ToolFactory;
 
 /**
  * @author LiXiaoFeng
@@ -109,7 +107,7 @@ public class ToolView extends LinearLayout {
 
         List<TargetEntity> targetEntities = new ArrayList<>();
         for (TargetEntity targetEntity : mTargetEntities) {
-            if (targetEntity.isAddition()) {
+            if (targetEntity.isTool()) {
                 targetEntities.add(targetEntity);
             }
         }
@@ -136,7 +134,6 @@ public class ToolView extends LinearLayout {
 
     private static class ToolAdapter extends RecyclerView.Adapter<ToolViewHolder> {
         private List<TargetEntity> mTargetEntities;
-        private OnInsertLogEntityListener mOnInsertLogEntityListener;
 
         public ToolAdapter(List<TargetEntity> targetEntities) {
             mTargetEntities = targetEntities;
@@ -146,13 +143,8 @@ public class ToolView extends LinearLayout {
         public ToolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ToolViewHolder toolViewHolder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tool_tool, parent, false));
             toolViewHolder.mToolBtn.setOnClickListener(v -> {
-                LogEntity logEntity = new LogEntity();
-                logEntity.setTarget(mTargetEntities.get(toolViewHolder.getAdapterPosition()).getFullName());
-                logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
-                DataRepository.getInstance().insertData(logEntity);
-                if (mOnInsertLogEntityListener != null) {
-                    mOnInsertLogEntityListener.onInsertLogEntity(logEntity);
-                }
+                TargetEntity targetEntity = mTargetEntities.get(toolViewHolder.getAdapterPosition());
+                ToolFactory.produceTool(targetEntity).function(targetEntity);
             });
             return toolViewHolder;
         }
@@ -175,10 +167,6 @@ public class ToolView extends LinearLayout {
         @Override
         public int getItemCount() {
             return mTargetEntities == null ? 0 : mTargetEntities.size();
-        }
-
-        public void setOnInsertLogEntityListener(OnInsertLogEntityListener onInsertLogEntityListener) {
-            mOnInsertLogEntityListener = onInsertLogEntityListener;
         }
     }
 

@@ -17,7 +17,7 @@ public class OrderDistributionLogStatistician implements LogStatistician {
             return null;
         }
 
-        int totalNumber = 0;
+        int totalNumber;
         int successNumber = 0;
         int failNumber = 0;
         int totalAppDurationNumber = 0;

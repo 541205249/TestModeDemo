@@ -1,12 +1,10 @@
 package testmode.eebbk.com.testmodedemo.model;
 
-import static testmode.eebbk.com.testmodedemo.common.Constant.CONNECTOR;
+import static testmode.eebbk.com.testmodedemo.Constant.CONNECTOR;
 
 /**
  * @author LiXiaoFeng
  * @date 2018/4/18
- * 【实现的主要功能】
- * 【修改者，修改日期，修改内容】
  */
 public final class LogModule {
     /**

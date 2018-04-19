@@ -7,9 +7,9 @@ import testmode.eebbk.com.testmodedemo.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 
 /**
- * Created by LiXiaoFeng on 2018/4/18.
+ * @author LiXiaoFeng
+ * @date 2018/4/19
  */
-
 public class HelperLogStatistician implements LogStatistician {
     @Override
     public String statistics(ModuleEntity moduleEntity, List<LogEntity> logEntities) {
@@ -17,7 +17,7 @@ public class HelperLogStatistician implements LogStatistician {
             return null;
         }
 
-        int totalNumber = 0;
+        int totalNumber;
         int successNumber = 0;
         int failNumber = 0;
         int totalAppDurationNumber = 0;
