@@ -108,11 +108,7 @@ public class LogEntity implements Parcelable {
     }
 
     public boolean equals(LogEntity logEntity) {
-        if (logEntity == null) {
-            return false;
-        }
-
-        return logEntity.id.equals(id);
+        return logEntity != null && logEntity.id.equals(id);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.common.Constant;
+import testmode.eebbk.com.testmodedemo.Constant;
 import testmode.eebbk.com.testmodedemo.util.LogModuleParseException;
 
 /**
@@ -23,11 +23,14 @@ public class XmlUtil {
     private static final String TAG = XmlUtil.class.getSimpleName();
     private static final String ATTRIBUTE_MODULE_NAME = "name";
     private static final String ATTRIBUTE_TARGET_NAME = "name";
-    private static final String ATTRIBUTE_TARGET_ADDITION = "addition";
+    private static final String ATTRIBUTE_TARGET_Tool = "tool";
     private static final String TAG_ROOT = "LogModule";
-    private static final String TAG_ROOT_MODULE = "RootModule";
     private static final String TAG_MODULE = "Module";
     private static final String TAG_TARGET = "Target";
+
+    private XmlUtil() {
+
+    }
 
     public static List<ModuleEntity> parse(Context context) throws LogModuleParseException {
         List<ModuleEntity> moduleEntities = new ArrayList<>();
@@ -77,7 +80,7 @@ public class XmlUtil {
                                     String attributeName = parser.getAttributeName(i);
                                     if (attributeName.equals(ATTRIBUTE_TARGET_NAME)) {
                                         name = parser.getAttributeValue(i);
-                                    } else if (attributeName.equals(ATTRIBUTE_TARGET_ADDITION)) {
+                                    } else if (attributeName.equals(ATTRIBUTE_TARGET_Tool)) {
                                         isAddition = parser.getAttributeBooleanValue(i, false);
                                     }
                                 }

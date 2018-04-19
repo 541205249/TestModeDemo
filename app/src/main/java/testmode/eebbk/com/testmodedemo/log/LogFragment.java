@@ -20,17 +20,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.common.Constant;
 import testmode.eebbk.com.testmodedemo.filter.LogFilter;
 import testmode.eebbk.com.testmodedemo.filter.LogFilterFactory;
-import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
-import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
-import testmode.eebbk.com.testmodedemo.util.DateUtils;
-import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.model.TargetEntity;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatistician;
+import testmode.eebbk.com.testmodedemo.statistician.LogStatisticianFactory;
+import testmode.eebbk.com.testmodedemo.tool.LogToolFactory;
+import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 
 /**
  * @author LiXiaoFeng
@@ -88,7 +87,7 @@ public class LogFragment extends Fragment {
 
         List<TargetEntity> toolTargetEntities = new ArrayList<>();
         for (TargetEntity targetEntity : mTargetEntities) {
-            if (targetEntity.isAddition()) {
+            if (targetEntity.isTool()) {
                 toolTargetEntities.add(targetEntity);
             }
         }
@@ -128,12 +127,11 @@ public class LogFragment extends Fragment {
                 if (logEntity == null) {
                     return;
                 }
-                int position = mLogAdapter.insertData(logEntity);
+                int position = mLogAdapter.removeData(logEntity);
                 if (position == -1) {
                     return;
                 }
-                mLogAdapter.notifyItemInserted(position);
-                mLogRv.scrollToPosition(position);
+                mLogAdapter.notifyItemRemoved(position);
                 updateStatistics();
             }
 
@@ -172,7 +170,7 @@ public class LogFragment extends Fragment {
 
         @Override
         public LogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            final LogViewHolder logViewHolder = new LogViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log, null));
+            final LogViewHolder logViewHolder = new LogViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log, parent, false));
             logViewHolder.mDeleteBtn.setOnClickListener(v -> {
                 int position = logViewHolder.getAdapterPosition();
                 LogEntity logEntity = mLogEntities.remove(position);
@@ -270,10 +268,8 @@ public class LogFragment extends Fragment {
         public ToolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ToolViewHolder holder = new ToolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_log_tool, parent, false));
             holder.mToolBtn.setOnClickListener(v -> {
-                LogEntity logEntity = new LogEntity();
-                logEntity.setTarget(mTargetEntities.get(holder.getAdapterPosition()).getFullName());
-                logEntity.setDate(DateUtils.getCurTimeString(Constant.DATE_FORMAT));
-                DataRepository.getInstance().insertData(logEntity);
+                TargetEntity targetEntity = mTargetEntities.get(holder.getAdapterPosition());
+                LogToolFactory.produceTool(targetEntity).function(targetEntity);
             });
             return holder;
         }

@@ -174,9 +174,12 @@ public class FloatLayout extends FrameLayout {
             }
             return true;
         });
+        isVisible = mToolLinearLayout.getVisibility() == VISIBLE;
+        mShowIbtn.setImageResource(isVisible ? R.drawable.icon_visible : R.drawable.icon_gone);
         mShowIbtn.setOnClickListener(v -> {
             isVisible = !isVisible;
             mToolLinearLayout.setVisibility(isVisible ? VISIBLE : GONE);
+            mShowIbtn.setImageResource(isVisible ? R.drawable.icon_visible : R.drawable.icon_gone);
         });
         mRefreshIbtn.setOnClickListener(v -> {
             DataRepository.getInstance().refreshData();
@@ -236,6 +239,7 @@ public class FloatLayout extends FrameLayout {
             toolView = new ToolView(getContext());
             toolView.setModuleEntity(moduleEntity);
             toolView.setTag(moduleEntity.getName());
+            mToolViewMap.put(moduleEntity.getName(), toolView);
         }
 
         mContainerLinearLayout.removeAllViews();

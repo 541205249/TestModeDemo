@@ -8,8 +8,8 @@ import testmode.eebbk.com.testmodedemo.model.ModuleEntity;
 /**
  * @author LiXiaoFeng
  * @date 2018/4/17
- * 【实现的主要功能】
- * 【修改者，修改日期，修改内容】
+ * <p>
+ * 日志统计器
  */
 public interface LogStatistician {
     String statistics(ModuleEntity moduleEntity, List<LogEntity> logEntities);

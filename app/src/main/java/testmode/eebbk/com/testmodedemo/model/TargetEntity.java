@@ -9,14 +9,14 @@ import java.util.UUID;
 public class TargetEntity {
     private String id;
     private String name;
-    private boolean isAddition;
+    private boolean isTool;
     private ModuleEntity parent;
     private String fullName;
 
-    TargetEntity(String name, String fullName, boolean isAddition, ModuleEntity parent) {
+    TargetEntity(String name, String fullName, boolean isTool, ModuleEntity parent) {
         this.name = name;
         this.fullName = fullName;
-        this.isAddition = isAddition;
+        this.isTool = isTool;
         this.parent = parent;
         this.id = UUID.randomUUID().toString();
     }
@@ -25,8 +25,8 @@ public class TargetEntity {
         return name;
     }
 
-    public boolean isAddition() {
-        return isAddition;
+    public boolean isTool() {
+        return isTool;
     }
 
     public ModuleEntity getParent() {

@@ -1,4 +1,4 @@
-package testmode.eebbk.com.testmodedemo.common;
+package testmode.eebbk.com.testmodedemo;
 
 /**
  * @author LiXiaoFeng
