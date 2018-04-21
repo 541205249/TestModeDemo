@@ -12,8 +12,8 @@
 
         <ImageButton
             android:id="@+id/float_move_ibtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_margin="8dp"
             android:background="@null"
             android:scaleType="fitXY"
@@ -21,9 +21,9 @@
 
         <ImageButton
             android:id="@+id/float_close_ibtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
             android:layout_margin="8dp"
             android:background="@null"
             android:scaleType="fitXY"
@@ -31,20 +31,20 @@
 
         <ImageButton
             android:id="@+id/float_refresh_ibtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_margin="8dp"
-            android:layout_toLeftOf="@id/float_close_ibtn"
+            android:layout_toStartOf="@id/float_close_ibtn"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/icon_refresh" />
 
         <ImageButton
             android:id="@+id/float_show_ibtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_margin="8dp"
-            android:layout_toLeftOf="@id/float_refresh_ibtn"
+            android:layout_toStartOf="@id/float_refresh_ibtn"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/icon_visible" />
