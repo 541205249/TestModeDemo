@@ -234,13 +234,9 @@ public class FloatLayout extends FrameLayout {
             return;
         }
 
-        ToolView toolView = mToolViewMap.get(moduleEntity.getName());
-        if (toolView == null) {
-            toolView = new ToolView(getContext());
-            toolView.setModuleEntity(moduleEntity);
-            toolView.setTag(moduleEntity.getName());
-            mToolViewMap.put(moduleEntity.getName(), toolView);
-        }
+        ToolView toolView = new ToolView(getContext());
+        toolView.setModuleEntity(moduleEntity);
+        toolView.setTag(moduleEntity.getName());
 
         mContainerLinearLayout.removeAllViews();
         mContainerLinearLayout.addView(toolView);
