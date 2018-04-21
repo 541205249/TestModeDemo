@@ -47,8 +47,8 @@ public class LogActivity extends Activity {
     }
 
     private void initView() {
-        mModuleLv = (ListView) findViewById(R.id.log_module_lv);
-        mContentFl = (FrameLayout) findViewById(R.id.log_container_fl);
+        mModuleLv = findViewById(R.id.log_module_lv);
+        mContentFl = findViewById(R.id.log_container_fl);
 
         mModuleAdapter = new ArrayAdapter<ModuleEntity>(this, android.R.layout.simple_list_item_1, DataRepository.getInstance().getRootModuleEntities()) {
             @NonNull
@@ -124,6 +124,6 @@ public class LogActivity extends Activity {
 
         fragmentManager.beginTransaction()
                 .replace(mContentFl.getId(), logFragment, moduleEntity.getName())
-                .commit();
+                .commitAllowingStateLoss();
     }
 }
