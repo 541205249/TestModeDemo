@@ -13,6 +13,7 @@ import testmode.eebbk.com.testmodedemo.model.DataRepository;
  */
 public class TestModeApplication extends Application {
     private static Context mContext;
+    private static int mRecordFilter = 1;
 
     @Override
     public void onCreate() {
@@ -23,5 +24,13 @@ public class TestModeApplication extends Application {
 
     public static Context getTestModeApplicationContext() {
         return mContext;
+    }
+
+    public static int getmRecordFilter() {
+        return mRecordFilter;
+    }
+
+    public static void setmRecordFilter() {
+        TestModeApplication.mRecordFilter = mRecordFilter + 1;
     }
 }

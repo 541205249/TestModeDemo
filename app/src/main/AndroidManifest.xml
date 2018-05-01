@@ -31,7 +31,7 @@
             </intent-filter>
             <meta-data
                 android:name="test_app_name"
-                android:value="问作业" />
+                android:value="AI" />
         </receiver>
     </application>
 
