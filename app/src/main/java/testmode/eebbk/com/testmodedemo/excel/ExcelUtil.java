@@ -22,12 +22,15 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
+import testmode.eebbk.com.testmodedemo.TestModeApplication;
 import testmode.eebbk.com.testmodedemo.model.LogEntity;
 
 public class ExcelUtil {
     private static final String EXCEL_FILE_NAME = "指标测试结果.xls";
     private static final String[] EXCEL_TITLE = {"指标项", "耗时", "值", "方法名", "描述", "标签", "入表时间", "ID"};
     private static final String SHEET_NAME = "业务指标";
+    private static int insertCount;
+    private static long totalUseTime;
 
     public static void insertLogEntity(Context context, LogEntity logEntity) throws Exception {
         WritableWorkbook wwb = getWritableWorkbook(context);
@@ -39,14 +42,33 @@ public class ExcelUtil {
             throws WriteException, IOException {
         int sheetRows = sheet.getRows();
 
+        if (logEntity.getMethodName().contains("startSpeechRecognize")) {
+            TestModeApplication.setmRecordFilter();
+            insertCount = 0;
+            totalUseTime = 0;
+        }
+        insertCount++;
+
         sheet.addCell(new Label(0, sheetRows, logEntity.getTarget()));
         sheet.addCell(new Label(1, sheetRows, logEntity.getSpentTime() + ""));
         sheet.addCell(new Label(2, sheetRows, logEntity.getValue() + ""));
         sheet.addCell(new Label(3, sheetRows, logEntity.getMethodName()));
         sheet.addCell(new Label(4, sheetRows, logEntity.getDescription()));
-        sheet.addCell(new Label(5, sheetRows, logEntity.getTag()));
+//        sheet.addCell(new Label(5, sheetRows, logEntity.getTag()));
+        sheet.addCell(new Label(5, sheetRows, String.valueOf(TestModeApplication.getmRecordFilter())));
         sheet.addCell(new Label(6, sheetRows, logEntity.getDate()));
         sheet.addCell(new Label(7, sheetRows, logEntity.getId()));
+        if (!logEntity.getMethodName().contains("startSpeechRecognize")) {
+            totalUseTime += logEntity.getSpentTime();
+        }
+
+        if (logEntity.getMethodName().contains("onCreateView")) {
+            TestModeApplication.setmRecordFilter();
+            if (insertCount == 9) {
+                sheet.addCell(new Label(4, sheetRows, "总耗时：" + totalUseTime));
+                totalUseTime = 0;
+            }
+        }
         wwb.write();
         wwb.close();
     }
