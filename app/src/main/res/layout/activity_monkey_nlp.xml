@@ -5,15 +5,17 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn1"
+        android:id="@+id/btn_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="指标验收" />
+        android:text="开始发送广播" />
 
-    <Button
-        android:id="@+id/btn2"
+    <TextView
+        android:id="@+id/tv_nlp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="语义理解自动化" />
+        android:gravity="center"
+        android:textColor="#ff0000"
+        android:textSize="48sp"/>
 
 </LinearLayout>
