@@ -3,7 +3,7 @@ package testmode.eebbk.com.testmodedemo;
 import android.app.Application;
 import android.content.Context;
 
-import testmode.eebbk.com.testmodedemo.model.DataRepository;
+import testmode.eebbk.com.testmodedemo.target.model.DataRepository;
 
 /**
  * @author LiXiaoFeng

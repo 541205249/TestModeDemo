@@ -2,6 +2,7 @@ package testmode.eebbk.com.testmodedemo.nlp;
 
 import android.content.Context;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -12,12 +13,12 @@ import jxl.Sheet;
 import testmode.eebbk.com.testmodedemo.excel.ReadExcelUtils;
 
 public class NlpExcelUtil {
-    public static int mCurrentIndex = 1;
+    private static int mCurrentIndex = 1;
 
     public static void getUnderstandingData(Context context, String excelName) throws Exception {
         String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file = new File(dir, excelName);
-        ReadExcelUtils.loadExcel(file, sheet -> {
+        ReadExcelUtils.loadExcel(context, file, sheet -> {
             getOneUnderstandingData(context, sheet, mCurrentIndex);
         });
     }
@@ -29,6 +30,13 @@ public class NlpExcelUtil {
             mCurrentIndex = 1;
         } else {
             Cell[] cells = sheet.getRow(currentIndex);
+
+            if (TextUtils.isEmpty(cells[0].getContents().trim())) {
+                mCurrentIndex = 1;
+                currentIndex = mCurrentIndex;
+                cells = sheet.getRow(currentIndex);
+            }
+
             info = new UnderstandingInfo(
                     cells[0].getContents().trim(),
                     cells[1].getContents().trim(),

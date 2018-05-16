@@ -21,9 +21,9 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import testmode.eebbk.com.testmodedemo.TestBroadCastReceiver;
+import testmode.eebbk.com.testmodedemo.target.TestBroadCastReceiver;
 import testmode.eebbk.com.testmodedemo.TestModeApplication;
-import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
 
 public class WriteExcelUtil {
     private static final String EXCEL_FILE_NAME = "指标测试结果.xls";

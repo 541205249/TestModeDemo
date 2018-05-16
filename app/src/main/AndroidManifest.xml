@@ -20,13 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".log.LogActivity" />
-        <activity android:name=".TargetCheckActivity" />
-        <activity android:name=".MonkeyNlpActivity" />
+        <activity android:name=".target.log.LogActivity" />
+        <activity android:name=".target.TargetCheckActivity" />
+        <activity android:name=".nlp.MonkeyAsrNlpActivity" />
 
         <service android:name=".excel.ExcelIntentService" />
 
-        <receiver android:name=".TestBroadCastReceiver">
+        <receiver android:name=".target.TestBroadCastReceiver">
             <intent-filter>
                 <action android:name="com.eebbk.askhomework.testmode.action" />
             </intent-filter>

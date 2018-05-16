@@ -1,7 +1,11 @@
 package testmode.eebbk.com.testmodedemo.excel;
 
+import android.content.Context;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -16,9 +20,13 @@ public class ReadExcelUtils {
         void onLoaded(Sheet sheet);
     }
 
-    public static void loadExcel(File file, OnExcelLoadListener onExcelLoadListener) throws Exception {
+    public static void loadExcel(Context context, File file, OnExcelLoadListener onExcelLoadListener) throws Exception {
         if (!file.exists()) {
-            onExcelLoadListener.onLoaded(null);
+            boolean isSuccess = createFileFromAssets(context, file);
+            if (!isSuccess) {
+                onExcelLoadListener.onLoaded(null);
+                return;
+            }
         }
 
         new Thread(() -> {
@@ -33,4 +41,22 @@ public class ReadExcelUtils {
         }).start();
     }
 
+    private static boolean createFileFromAssets(Context context, File file) {
+        try {
+            InputStream is = context.getResources().getAssets().open("语义理解monkey测试.xls");
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] temp = new byte[1024];
+            int i;
+            while ((i = is.read(temp)) > 0) {
+                fos.write(temp, 0, i);
+            }
+            fos.close();
+            is.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
