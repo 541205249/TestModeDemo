@@ -23,6 +23,7 @@
         <activity android:name=".target.log.LogActivity" />
         <activity android:name=".target.TargetCheckActivity" />
         <activity android:name=".nlp.MonkeyAsrNlpActivity" />
+        <activity android:name=".nlp.NlpAndResultActivity" />
 
         <service android:name=".excel.ExcelIntentService" />
 

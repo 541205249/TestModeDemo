@@ -12,18 +12,18 @@ import jxl.Cell;
 import jxl.Sheet;
 import testmode.eebbk.com.testmodedemo.excel.ReadExcelUtils;
 
-public class NlpExcelUtil {
+public class MonkeyNlpExcelUtil {
     private static int mCurrentIndex = 1;
 
     public static void getUnderstandingData(Context context, String excelName) throws Exception {
         String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file = new File(dir, excelName);
         ReadExcelUtils.loadExcel(context, file, sheet -> {
-            getOneUnderstandingData(context, sheet, mCurrentIndex);
+            getOneUnderstandingData(sheet, mCurrentIndex);
         });
     }
 
-    private static void getOneUnderstandingData(Context context, Sheet sheet, int currentIndex) {
+    private static void getOneUnderstandingData(Sheet sheet, int currentIndex) {
         UnderstandingInfo info;
         if(sheet == null || currentIndex >= sheet.getRows()) {
             info = new UnderstandingInfo("", "", "");

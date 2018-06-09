@@ -45,7 +45,7 @@ public class MonkeyAsrNlpActivity extends Activity {
 
     private void startMonkeyNlp() {
         try {
-            NlpExcelUtil.getUnderstandingData(getApplicationContext(), "语义理解monkey测试.xls");
+            MonkeyNlpExcelUtil.getUnderstandingData(getApplicationContext(), "语义理解monkey测试.xls");
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
             e.printStackTrace();

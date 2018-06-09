@@ -1,4 +1,4 @@
-package testmode.eebbk.com.testmodedemo.target.window;
+package testmode.eebbk.com.testmodedemo.target.window.layout;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,22 +22,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 import testmode.eebbk.com.testmodedemo.target.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.target.model.ModuleEntity;
 import testmode.eebbk.com.testmodedemo.target.model.TargetEntity;
+import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
+import testmode.eebbk.com.testmodedemo.target.window.ToolView;
+import testmode.eebbk.com.testmodedemo.util.LogFormatUtil;
 
 /**
  * @author LiXiaoFeng
  * @date 2018/4/18
  */
-public class FloatLayout extends FrameLayout {
-    private static final String TAG = FloatLayout.class.getSimpleName();
+public class TestModeFloatLayout extends FloatLayout {
+    private static final String TAG = TestModeFloatLayout.class.getSimpleName();
     private final WindowManager mWindowManager;
     private float mTouchStartX;
     private float mTouchStartY;
-    private WindowManager.LayoutParams mWmParams;
     private ImageButton mMoveIbtn;
     private ImageButton mShowIbtn;
     private ImageButton mRefreshIbtn;
@@ -53,11 +53,11 @@ public class FloatLayout extends FrameLayout {
     private boolean isVisible;
     private DataRepository.DataChangeBroadcastReceiver mDataChangeBroadcastReceiver;
 
-    public FloatLayout(Context context) {
+    public TestModeFloatLayout(Context context) {
         this(context, null);
     }
 
-    public FloatLayout(Context context, AttributeSet attrs) {
+    public TestModeFloatLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         mDataChangeBroadcastReceiver = new DataRepository.DataChangeBroadcastReceiver() {
@@ -114,7 +114,7 @@ public class FloatLayout extends FrameLayout {
     }
 
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.float_window_layout, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.test_mode_float_window_layout, this);
         mMoveIbtn = (ImageButton) view.findViewById(R.id.float_move_ibtn);
         mShowIbtn = (ImageButton) view.findViewById(R.id.float_show_ibtn);
         mRefreshIbtn = (ImageButton) view.findViewById(R.id.float_refresh_ibtn);
@@ -240,10 +240,6 @@ public class FloatLayout extends FrameLayout {
 
         mContainerLinearLayout.removeAllViews();
         mContainerLinearLayout.addView(toolView);
-    }
-
-    public void setParams(WindowManager.LayoutParams params) {
-        mWmParams = params;
     }
 
     private void showNewestLog(LogEntity logEntity) {

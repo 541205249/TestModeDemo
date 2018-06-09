@@ -19,10 +19,10 @@ public class FloatWindowController {
         private static final FloatWindowController sInstance = new FloatWindowController();
     }
 
-    public void open(Context context) {
+    public void open(Context context, int type) {
         mContext = context;
         if (mHomeKeyReceiver == null) {
-            initFloatWindow(context);
+            initFloatWindow(context, type);
         }
 
         FloatWindow.show();
@@ -32,7 +32,8 @@ public class FloatWindowController {
         FloatWindow.hide();
     }
 
-    public void close() {
+    public void close()
+    {
         if (mContext == null) {
             return;
         }
@@ -43,11 +44,10 @@ public class FloatWindowController {
             mHomeKeyReceiver = null;
         }
     }
-
-    private void initFloatWindow(Context context) {
+    private void initFloatWindow(Context context, int type) {
         mHomeKeyReceiver = new HomeWatcherReceiver();
         IntentFilter homeFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.registerReceiver(mHomeKeyReceiver, homeFilter);
-        FloatWindow.createFloatWindow(context);
+        FloatWindow.createFloatWindow(context, type);
     }
 }

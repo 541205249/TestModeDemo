@@ -5,50 +5,11 @@
     android:background="#aa000000"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <include
         android:id="@+id/float_control_bar_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/float_move_ibtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_move" />
-
-        <ImageButton
-            android:id="@+id/float_close_ibtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="8dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_close" />
-
-        <ImageButton
-            android:id="@+id/float_refresh_ibtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:layout_toStartOf="@id/float_close_ibtn"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_refresh" />
-
-        <ImageButton
-            android:id="@+id/float_show_ibtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:layout_toStartOf="@id/float_refresh_ibtn"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_visible" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        layout="@layout/float_bar_layout"/>
 
     <View
         android:id="@+id/separate_view_1"

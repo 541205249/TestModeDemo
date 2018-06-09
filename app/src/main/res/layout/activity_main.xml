@@ -16,4 +16,10 @@
         android:layout_height="wrap_content"
         android:text="语音识别/语义理解 自动化" />
 
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试链路：nlp到内容展示" />
+
 </LinearLayout>

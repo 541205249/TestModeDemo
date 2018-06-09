@@ -10,6 +10,8 @@ import testmode.eebbk.com.testmodedemo.target.log.LogActivity;
 import testmode.eebbk.com.testmodedemo.target.window.FloatPermissionManager;
 import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
 
+import static testmode.eebbk.com.testmodedemo.target.window.FloatWindow.TYPE_TEST_MODE;
+
 /**
  * @author LiXiaoFeng
  * @date 2018/4/15
@@ -28,7 +30,7 @@ public class TargetCheckActivity extends Activity {
             //有对应权限或者系统版本小于7.0
             if (isPermission || Build.VERSION.SDK_INT < 24) {
                 //开启悬浮窗
-                FloatWindowController.getInstance().open(getApplicationContext());
+                FloatWindowController.getInstance().open(getApplicationContext(), TYPE_TEST_MODE);
             }
         });
 

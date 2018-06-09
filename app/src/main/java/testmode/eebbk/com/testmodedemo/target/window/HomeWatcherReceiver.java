@@ -15,7 +15,7 @@ public class HomeWatcherReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+        if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(action)) {
             String from = intent.getStringExtra(SYSTEM_DIALOG_FROM_KEY);
             if (SYSTEM_DIALOG_FROM_HOME_KEY.equals(from)) { //短按Home键
                 Log.i(TAG, "Home Key");

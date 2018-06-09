@@ -9,17 +9,28 @@ import android.view.Gravity;
 import android.view.WindowManager;
 
 import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.target.window.layout.FloatLayout;
+import testmode.eebbk.com.testmodedemo.target.window.layout.TestModeFloatLayout;
+import testmode.eebbk.com.testmodedemo.target.window.layout.TestNlpAndResultFloatLayout;
 
 public class FloatWindow {
+    public static final int TYPE_TEST_MODE = 0;
+    public static final int TYPE_TEST_NLP_RESULT = 1;
+
     private static FloatLayout mFloatLayout;
     private static WindowManager mWindowManager;
     private static WindowManager.LayoutParams wmParams;
     private static boolean mHasShown;
 
-    public static void createFloatWindow(Context context) {
+    public static void createFloatWindow(Context context, int type) {
         wmParams = new WindowManager.LayoutParams();
         WindowManager windowManager = getWindowManager(context);
-        mFloatLayout = new FloatLayout(context);
+        if (type == TYPE_TEST_MODE) {
+            mFloatLayout = new TestModeFloatLayout(context);
+        } else {
+            mFloatLayout = new TestNlpAndResultFloatLayout(context);
+        }
+
         if (Build.VERSION.SDK_INT >= 24) { /*android7.0不能用TYPE_TOAST*/
             wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         } else { /*以下代码块使得android6.0之后的用户不必再去手动开启悬浮窗权限*/

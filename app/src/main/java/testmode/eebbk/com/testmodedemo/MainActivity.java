@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import testmode.eebbk.com.testmodedemo.nlp.MonkeyAsrNlpActivity;
+import testmode.eebbk.com.testmodedemo.nlp.NlpAndResultActivity;
 import testmode.eebbk.com.testmodedemo.target.TargetCheckActivity;
 
 /**
@@ -29,5 +30,11 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(MainActivity.this, MonkeyAsrNlpActivity.class);
             startActivity(intent);
         });
+
+        findViewById(R.id.btn3).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, NlpAndResultActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
