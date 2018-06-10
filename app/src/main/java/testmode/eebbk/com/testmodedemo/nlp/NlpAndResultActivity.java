@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +23,8 @@ public class NlpAndResultActivity extends Activity {
     private static final String TAG = "Log_NlpAndResult";
     private static final String ACTION_MONKEY_NLP = "com.eebbk.askhomework.monkeynlp.action";
     private TextView mNlpTxtTv;
+    private EditText mQuestionEt;
+    public static EditText mQuestionIndexEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class NlpAndResultActivity extends Activity {
         EventBus.getDefault().register(this);
 
         mNlpTxtTv = findViewById(R.id.tv_nlp);
+        mQuestionEt = findViewById(R.id.edit_question);
+        mQuestionIndexEt = findViewById(R.id.edit_question_index);
 
         findViewById(R.id.btn_start_nlp).setOnClickListener(v -> {
             boolean isPermission = FloatPermissionManager.getInstance().applyFloatWindow(NlpAndResultActivity.this);

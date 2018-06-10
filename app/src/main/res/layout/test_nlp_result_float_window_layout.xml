@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="500dp"
     android:layout_height="wrap_content"
-    android:background="#aa000000"
-    android:orientation="vertical">
+    android:background="#aa000000" >
 
     <include
         android:id="@+id/float_control_bar_rl"
@@ -18,22 +17,11 @@
         android:layout_below="@id/float_control_bar_rl"
         android:background="@color/white" />
 
-    <EditText
-        android:id="@+id/edit_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/separate_view_1"
-        android:layout_toEndOf="@+id/float_log_tv"
-        android:hint="请输入问法"
-        android:text="#?#"
-        android:textColor="@color/white" />
-
     <Button
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/edit_question"
-        android:layout_alignTop="@id/edit_question"
+        android:layout_below="@id/separate_view_1"
         android:text="开始"/>
 
     <Button
@@ -41,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/btn_start"
-        android:layout_alignTop="@id/edit_question"
+        android:layout_alignTop="@id/btn_start"
         android:text="清零"/>
 
     <TextView

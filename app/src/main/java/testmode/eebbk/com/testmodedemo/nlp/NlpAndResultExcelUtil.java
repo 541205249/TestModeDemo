@@ -42,7 +42,7 @@ public class NlpAndResultExcelUtil {
             Workbook workbook = Workbook.getWorkbook(file);
             writableWorkbook = Workbook.createWorkbook(file, workbook);
             WritableSheet sheet = writableWorkbook.getSheet("Sheet1");
-            sheet.addCell(new Label(1, mCurrentIndex, reason));
+            sheet.addCell(new Label(2, mCurrentIndex, reason));
             writableWorkbook.write();
             writableWorkbook.close();
         } catch (Exception e) {
@@ -70,7 +70,9 @@ public class NlpAndResultExcelUtil {
                 cells = sheet.getRow(currentIndex);
             }
 
-            info = new TestNlpResultInfo(cells[0].getContents().trim(), currentIndex);
+            String questionEg = cells[1].getContents().trim();
+            String data = questionEg.replace("#?#", cells[0].getContents().trim());
+            info = new TestNlpResultInfo(data, currentIndex);
 
             mCurrentIndex ++;
         }

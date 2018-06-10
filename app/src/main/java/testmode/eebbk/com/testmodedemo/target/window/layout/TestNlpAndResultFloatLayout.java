@@ -8,12 +8,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import testmode.eebbk.com.testmodedemo.R;
+import testmode.eebbk.com.testmodedemo.nlp.NlpAndResultActivity;
 import testmode.eebbk.com.testmodedemo.nlp.NlpAndResultExcelUtil;
 import testmode.eebbk.com.testmodedemo.target.model.DataRepository;
 import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
@@ -67,15 +69,20 @@ public class TestNlpAndResultFloatLayout extends FloatLayout {
 
         view.findViewById(R.id.btn_reset).setOnClickListener(v -> NlpAndResultExcelUtil.mCurrentIndex = 1);
 
-        view.findViewById(R.id.btn_start).setOnClickListener(v -> next());
+        view.findViewById(R.id.btn_start).setOnClickListener(v -> {
+            NlpAndResultExcelUtil.mCurrentIndex = Integer.parseInt(NlpAndResultActivity.mQuestionIndexEt.getText().toString().trim());
+            next();
+        });
 
-        String[] reasonArr = new String[]{"测试", "软件", "交互", "内容", "问法", "识别", "后台"};
+        String[] reasonArr = new String[]{"正确", "软件", "交互", "内容", "问法", "识别", "后台", "未知"};
         ListView listView = view.findViewById(R.id.lv_reason);
         ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, reasonArr);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             recordOne(reasonArr[position]);
         });
+
+
     }
 
     private void next() {
