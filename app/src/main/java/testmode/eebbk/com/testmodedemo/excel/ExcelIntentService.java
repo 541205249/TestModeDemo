@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
 
 /**
  * @author LiXiaoFeng
@@ -46,9 +46,9 @@ public class ExcelIntentService extends IntentService {
 
         try {
             if (isInsert) {
-                ExcelUtil.insertLogEntity(this, logEntity);
+                WriteExcelUtil.insertLogEntity(this, logEntity);
             } else {
-                ExcelUtil.removeLogEntity(this, logEntity);
+                WriteExcelUtil.removeLogEntity(this, logEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();

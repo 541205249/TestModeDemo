@@ -1,22 +1,29 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
     defaultConfig {
         applicationId "com.eebbk.testmodedemo"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release.initWith(signingConfigs.debug) //继承debug版本的签名
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -24,8 +31,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    implementation 'org.greenrobot:eventbus:3.0.0'
 }

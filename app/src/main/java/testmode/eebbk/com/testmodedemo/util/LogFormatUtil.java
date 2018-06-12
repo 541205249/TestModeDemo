@@ -2,7 +2,7 @@ package testmode.eebbk.com.testmodedemo.util;
 
 import java.math.BigDecimal;
 
-import testmode.eebbk.com.testmodedemo.model.LogEntity;
+import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
 
 /**
  * @author LiXiaoFeng

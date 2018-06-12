@@ -5,26 +5,21 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/open_float"
+        android:id="@+id/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="开启悬浮窗" />
+        android:text="指标验收" />
 
     <Button
-        android:id="@+id/hide_float"
+        android:id="@+id/btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="隐藏悬浮窗" />
+        android:text="语音识别/语义理解 自动化" />
 
     <Button
-        android:id="@+id/close_float"
+        android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="关闭悬浮窗" />
+        android:text="测试链路：nlp到内容展示" />
 
-    <Button
-        android:id="@+id/log_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查看日志" />
 </LinearLayout>
