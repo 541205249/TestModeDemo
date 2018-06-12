@@ -1,4 +1,4 @@
-package testmode.eebbk.com.testmodedemo.nlp;
+package testmode.eebbk.com.testmodedemo.dumiasr;
 
 import android.content.Context;
 import android.os.Environment;
@@ -15,8 +15,9 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import testmode.eebbk.com.testmodedemo.excel.ReadExcelUtils;
+import testmode.eebbk.com.testmodedemo.nlp.TestNlpResultInfo;
 
-public class NlpAndResultExcelUtil {
+public class ExcelUtil1 {
     private static String FILE_NAME = "0610看题目问问题新测试集.xls";
     public static int mCurrentIndex = 1;
 
