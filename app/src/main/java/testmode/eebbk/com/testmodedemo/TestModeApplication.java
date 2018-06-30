@@ -22,7 +22,7 @@ public class TestModeApplication extends Application {
         DataRepository.getInstance().init(this.getApplicationContext());
     }
 
-    public static Context getTestModeApplicationContext() {
+    public static Context getContext() {
         return mContext;
     }
 

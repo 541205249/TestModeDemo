@@ -30,7 +30,7 @@ public class LogToolFactory {
 
         if (target.getFullName().equals(LogModule.Audio.DECIBEL)) {
             logTool = targetEntity -> {
-                Toast.makeText(TestModeApplication.getTestModeApplicationContext(), "功能待开发", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TestModeApplication.getContext(), "功能待开发", Toast.LENGTH_SHORT).show();
             };
         } else {
             logTool = targetEntity -> {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="500dp"
+    android:layout_width="400dp"
     android:layout_height="wrap_content"
     android:background="#aa000000" >
 
@@ -36,11 +36,10 @@
         android:id="@+id/float_log_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edit_question"
-        android:background="@color/heavy_transparent_black"
+        android:layout_alignTop="@id/btn_reset"
+        android:layout_toEndOf="@id/btn_reset"
         android:padding="8dp"
-        android:textColor="@color/white"
-        android:visibility="gone"/>
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/tv_tips"
@@ -48,13 +47,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_start"
         android:textColor="@color/white"
-        android:text="请选择问题原因"/>
+        android:text="请选择结果\n并跳到下一个"/>
 
-    <ListView
+    <GridView
         android:id="@+id/lv_reason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_start"
         android:layout_toEndOf="@id/tv_tips"
+        android:numColumns="2"
         android:background="#80ffffff"/>
 </RelativeLayout>

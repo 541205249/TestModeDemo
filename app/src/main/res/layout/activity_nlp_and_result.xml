@@ -4,12 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_question"
+    <TextView
+        android:id="@+id/tv_file_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_select_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="请输入问法"
-        android:text="#?#" />
+        android:text="请选择待测文件" />
 
     <EditText
         android:id="@+id/edit_question_index"

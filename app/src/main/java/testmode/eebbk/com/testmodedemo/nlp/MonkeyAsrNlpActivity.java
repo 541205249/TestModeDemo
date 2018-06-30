@@ -2,6 +2,7 @@ package testmode.eebbk.com.testmodedemo.nlp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -14,10 +15,15 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import testmode.eebbk.com.testmodedemo.R;
 import testmode.eebbk.com.testmodedemo.asr.AsrFileUtil;
+import testmode.eebbk.com.testmodedemo.target.window.FloatPermissionManager;
+import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
+import testmode.eebbk.com.testmodedemo.util.BroadCastUtils;
+
+import static testmode.eebbk.com.testmodedemo.target.window.FloatWindow.TYPE_TEST_NLP_RESULT;
+import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.ACTION_MONKEY_NLP;
 
 public class MonkeyAsrNlpActivity extends Activity {
     private static final String TAG = "Log_MonkeyAsrNlp";
-    private static final String ACTION_MONKEY_NLP = "com.eebbk.askhomework.monkeynlp.action";
     private static final String ACTION_MONKEY_ASR = "com.eebbk.askhomework.monkeyasr.action";
     private TextView mAsrTxtTv;
     private TextView mNlpTxtTv;
@@ -27,13 +33,23 @@ public class MonkeyAsrNlpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monkey_asr_nlp);
 
+        BroadCastUtils.sendTestNlpBroadcast(this, ACTION_MONKEY_NLP);
+
         EventBus.getDefault().register(this);
 
         mAsrTxtTv = findViewById(R.id.tv_asr);
         mNlpTxtTv = findViewById(R.id.tv_nlp);
 
         findViewById(R.id.btn_start_asr).setOnClickListener(v -> startMonkeyAsr());
-        findViewById(R.id.btn_start_nlp).setOnClickListener(v -> startMonkeyNlp());
+        findViewById(R.id.btn_start_nlp).setOnClickListener(v -> {
+            startMonkeyNlp();
+            boolean isPermission = FloatPermissionManager.getInstance().applyFloatWindow(MonkeyAsrNlpActivity.this);
+            //有对应权限或者系统版本小于7.0
+            if (isPermission || Build.VERSION.SDK_INT < 24) {
+                //开启悬浮窗
+                FloatWindowController.getInstance().open(getApplicationContext(), TYPE_TEST_NLP_RESULT);
+            }
+        });
     }
 
     @Override

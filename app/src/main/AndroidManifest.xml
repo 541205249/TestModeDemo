@@ -23,7 +23,9 @@
         <activity android:name=".target.log.LogActivity" />
         <activity android:name=".target.TargetCheckActivity" />
         <activity android:name=".nlp.MonkeyAsrNlpActivity" />
-        <activity android:name=".nlp.NlpAndResultActivity" />
+        <activity
+            android:name=".nlp.NlpAndResultActivity"
+            android:launchMode="singleTask"/>
 
         <service android:name=".excel.ExcelIntentService" />
 
