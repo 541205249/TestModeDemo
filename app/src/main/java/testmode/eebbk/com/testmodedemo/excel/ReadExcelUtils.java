@@ -20,9 +20,9 @@ public class ReadExcelUtils {
         void onLoaded(Sheet sheet);
     }
 
-    public static void loadExcel(Context context, File file, OnExcelLoadListener onExcelLoadListener) throws Exception {
+    public static void loadExcel(Context context, File file, String assetDefaultFileName, OnExcelLoadListener onExcelLoadListener) throws Exception {
         if (!file.exists()) {
-            boolean isSuccess = createFileFromAssets(context, file);
+            boolean isSuccess = createFileFromAssets(context, file, assetDefaultFileName);
             if (!isSuccess) {
                 onExcelLoadListener.onLoaded(null);
                 return;
@@ -41,9 +41,9 @@ public class ReadExcelUtils {
         }).start();
     }
 
-    private static boolean createFileFromAssets(Context context, File file) {
+    private static boolean createFileFromAssets(Context context, File file, String assetDefaultFileName) {
         try {
-            InputStream is = context.getResources().getAssets().open("语义理解monkey测试.xls");
+            InputStream is = context.getResources().getAssets().open(assetDefaultFileName);
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
             byte[] temp = new byte[1024];

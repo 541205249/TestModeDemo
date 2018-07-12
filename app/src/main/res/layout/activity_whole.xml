@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_file_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_select_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择待测文件" />
+
+    <EditText
+        android:id="@+id/edit_question_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="起始位置"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开悬浮窗" />
+
+</LinearLayout>

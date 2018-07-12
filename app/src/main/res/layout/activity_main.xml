@@ -4,22 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn1"
+    <GridView
+        android:id="@+id/gv_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="指标验收" />
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="语音识别/语义理解 自动化" />
-
-    <Button
-        android:id="@+id/btn3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试链路：nlp到内容展示" />
+        android:layout_margin="50dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="20dp"
+        android:numColumns="3"
+        android:background="#80ffffff"/>
 
 </LinearLayout>

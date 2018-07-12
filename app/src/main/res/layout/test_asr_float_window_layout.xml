@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:background="#aa000000" >
+
+    <include
+        android:id="@+id/float_control_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/float_bar_layout"/>
+
+    <View
+        android:id="@+id/separate_view_1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/float_control_bar_rl"
+        android:background="@color/white" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separate_view_1"
+        android:text="开始并自动下一条"/>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/btn_reset"
+        android:layout_toEndOf="@id/btn_reset"
+        android:padding="8dp"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

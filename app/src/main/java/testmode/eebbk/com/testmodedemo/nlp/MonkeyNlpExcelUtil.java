@@ -18,7 +18,7 @@ public class MonkeyNlpExcelUtil {
     public static void getUnderstandingData(Context context, String excelName) throws Exception {
         String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file = new File(dir, excelName);
-        ReadExcelUtils.loadExcel(context, file, sheet -> {
+        ReadExcelUtils.loadExcel(context, file, "语义理解monkey测试.xls", sheet -> {
             getOneUnderstandingData(sheet, mCurrentIndex);
         });
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,17 +15,16 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.asr.AsrFileUtil;
 import testmode.eebbk.com.testmodedemo.target.window.FloatPermissionManager;
 import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
 import testmode.eebbk.com.testmodedemo.util.BroadCastUtils;
 
-import static testmode.eebbk.com.testmodedemo.target.window.FloatWindow.TYPE_TEST_NLP_RESULT;
+import static testmode.eebbk.com.testmodedemo.target.window.FloatWindow.TYPE_TEST_NLP;
 import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.ACTION_MONKEY_NLP;
+import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.ACTION_TEST_ASR;
 
 public class MonkeyAsrNlpActivity extends Activity {
     private static final String TAG = "Log_MonkeyAsrNlp";
-    private static final String ACTION_MONKEY_ASR = "com.eebbk.askhomework.monkeyasr.action";
     private TextView mAsrTxtTv;
     private TextView mNlpTxtTv;
 
@@ -33,7 +33,7 @@ public class MonkeyAsrNlpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monkey_asr_nlp);
 
-        BroadCastUtils.sendTestNlpBroadcast(this, ACTION_MONKEY_NLP);
+        BroadCastUtils.registerBroadcast(this, ACTION_MONKEY_NLP);
 
         EventBus.getDefault().register(this);
 
@@ -47,7 +47,7 @@ public class MonkeyAsrNlpActivity extends Activity {
             //有对应权限或者系统版本小于7.0
             if (isPermission || Build.VERSION.SDK_INT < 24) {
                 //开启悬浮窗
-                FloatWindowController.getInstance().open(getApplicationContext(), TYPE_TEST_NLP_RESULT);
+                FloatWindowController.getInstance().open(getApplicationContext(), TYPE_TEST_NLP);
             }
         });
     }
@@ -69,7 +69,13 @@ public class MonkeyAsrNlpActivity extends Activity {
     }
 
     private void startMonkeyAsr() {
-        String pcm = AsrFileUtil.getPcmPath();
+        BroadCastUtils.registerBroadcast(this, ACTION_TEST_ASR);
+
+        Intent intent = new Intent(ACTION_TEST_ASR);
+        intent.putExtra("pcm_path", Environment.getExternalStorageDirectory().getAbsolutePath() + "/001.pcm");
+        sendBroadcast(intent);
+
+        /*String pcm = AsrFileUtils.getPcmPath();
         if (TextUtils.isEmpty(pcm)) {
             Log.i(TAG, "pcm为空");
         } else {
@@ -80,7 +86,7 @@ public class MonkeyAsrNlpActivity extends Activity {
             mAsrTxtTv.setText(pcm);
         }
 
-        new Handler().postDelayed(this::startMonkeyAsr, 10 * 1000);
+        new Handler().postDelayed(this::startMonkeyAsr, 10 * 1000);*/
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -49,7 +49,7 @@ public class UnderstandingInfo {
         return "UnderstandingInfo{" +
                 "skillId='" + skillId + '\'' +
                 ", intentName='" + intentName + '\'' +
-                ", data='" + data + '\'' +
+                ", txt='" + data + '\'' +
                 '}';
     }
 }

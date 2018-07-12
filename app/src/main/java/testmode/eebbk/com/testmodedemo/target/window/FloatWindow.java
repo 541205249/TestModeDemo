@@ -8,14 +8,18 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.WindowManager;
 
+import testmode.eebbk.com.testmodedemo.asr.TestAsrFloatLayout;
 import testmode.eebbk.com.testmodedemo.target.model.LogEntity;
 import testmode.eebbk.com.testmodedemo.target.window.layout.FloatLayout;
 import testmode.eebbk.com.testmodedemo.target.window.layout.TestModeFloatLayout;
-import testmode.eebbk.com.testmodedemo.target.window.layout.TestNlpAndResultFloatLayout;
+import testmode.eebbk.com.testmodedemo.nlp.TestNlpFloatLayout;
+import testmode.eebbk.com.testmodedemo.whole.TestWholeFloatLayout;
 
 public class FloatWindow {
-    public static final int TYPE_TEST_MODE = 0;
-    public static final int TYPE_TEST_NLP_RESULT = 1;
+    public static final int TYPE_TEST_TARGET = 0;
+    public static final int TYPE_TEST_NLP = 1;
+    public static final int TYPE_TEST_ASR = 2;
+    public static final int TYPE_TEST_WHOLE = 3;
 
     private static FloatLayout mFloatLayout;
     private static WindowManager mWindowManager;
@@ -25,10 +29,16 @@ public class FloatWindow {
     public static void createFloatWindow(Context context, int type) {
         wmParams = new WindowManager.LayoutParams();
         WindowManager windowManager = getWindowManager(context);
-        if (type == TYPE_TEST_MODE) {
+        if (type == TYPE_TEST_TARGET) {
             mFloatLayout = new TestModeFloatLayout(context);
+        } else if (type == TYPE_TEST_ASR) {
+            mFloatLayout = new TestAsrFloatLayout(context);
+        } else if (type == TYPE_TEST_NLP) {
+            mFloatLayout = new TestNlpFloatLayout(context);
+        } else if (type == TYPE_TEST_WHOLE) {
+            mFloatLayout = new TestWholeFloatLayout(context);
         } else {
-            mFloatLayout = new TestNlpAndResultFloatLayout(context);
+            mFloatLayout = new TestNlpFloatLayout(context);
         }
 
         if (Build.VERSION.SDK_INT >= 24) { /*android7.0不能用TYPE_TOAST*/

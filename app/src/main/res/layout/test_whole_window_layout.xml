@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:background="#aa000000"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/float_control_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/float_bar_layout"/>
+
+    <View
+        android:id="@+id/separate_view_1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始"/>
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止"/>
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        style="@style/TvStyle"
+        android:text="当前序号:"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/tv_original_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TvStyle"
+            android:text="标注文本:"/>
+
+        <TextView
+            android:id="@+id/tv_asr_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TvStyle"
+            android:layout_below="@id/tv_original_txt"
+            android:text="识别文本:"/>
+
+        <TextView
+            android:id="@+id/tv_asr_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/tv_original_txt"
+            android:layout_alignBottom="@id/tv_asr_txt"
+            style="@style/TvStyle"
+            android:text=""/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_nlp_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="语义理解:"
+        style="@style/TvStyle"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择一个结果,并自动进入下一条"
+        android:textSize="12sp"/>
+
+    <GridView
+        android:id="@+id/gv_whole_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:background="#80ffffff"/>
+</LinearLayout>

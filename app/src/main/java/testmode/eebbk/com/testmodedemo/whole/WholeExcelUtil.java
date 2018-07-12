@@ -1,9 +1,7 @@
-package testmode.eebbk.com.testmodedemo.nlp;
+package testmode.eebbk.com.testmodedemo.whole;
 
 import android.content.Context;
 import android.text.TextUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -17,17 +15,29 @@ import testmode.eebbk.com.testmodedemo.TestModeApplication;
 import testmode.eebbk.com.testmodedemo.excel.ReadExcelUtils;
 import testmode.eebbk.com.testmodedemo.util.SharedPreferenceUtils;
 
-public class NlpAndResultExcelUtil {
+public class WholeExcelUtil {
     public static String FILE_PATH = "";
+    public static String FILE_DIR = "";
 
-    public static void getNlpAndResultData(Context context) throws Exception {
-        File file = new File(FILE_PATH);
-        ReadExcelUtils.loadExcel(context, file, "", sheet -> {
-            getOneData(sheet, getCurrentIndex());
-        });
+    public interface OnDataLoadedListener {
+        void onLoaded(TestWholeInfo info);
     }
 
-    public static void updateNlpAndResultData(String result, String target, String nlpMsg) {
+    public static void getWholeTestData(Context context, OnDataLoadedListener onDataLoadedListener){
+        File file = new File(FILE_PATH);
+        FILE_DIR = file.getParent();
+        try {
+            ReadExcelUtils.loadExcel(context, file, "", sheet -> {
+                TestWholeInfo info = getOneData(sheet, getCurrentIndex());
+                onDataLoadedListener.onLoaded(info);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            onDataLoadedListener.onLoaded(null);
+        }
+    }
+
+    public static void updateResultData(String result, String nlpTxt, String nlpMsg, String asrTxt, String asrResult) {
         File file = new File(FILE_PATH);
 
         int currentIndex = getCurrentIndex();
@@ -36,9 +46,11 @@ public class NlpAndResultExcelUtil {
             Workbook workbook = Workbook.getWorkbook(file);
             writableWorkbook = Workbook.createWorkbook(file, workbook);
             WritableSheet sheet = writableWorkbook.getSheet(0);
-            sheet.addCell(new Label(1, currentIndex, target));
             sheet.addCell(new Label(2, currentIndex, result));
-            sheet.addCell(new Label(3, currentIndex, nlpMsg));
+            sheet.addCell(new Label(3, currentIndex, asrResult));
+            sheet.addCell(new Label(4, currentIndex, asrTxt));
+            sheet.addCell(new Label(5, currentIndex, nlpTxt));
+            sheet.addCell(new Label(6, currentIndex, nlpMsg));
             writableWorkbook.write();
             writableWorkbook.close();
         } catch (Exception e) {
@@ -56,27 +68,29 @@ public class NlpAndResultExcelUtil {
 
     }
 
-    private static void getOneData(Sheet sheet, int currentIndex) {
-        TestNlpResultInfo info;
+    private static TestWholeInfo getOneData(Sheet sheet, int currentIndex) {
+        TestWholeInfo info;
         if(sheet == null ) {
-            info = new TestNlpResultInfo("sheet页为空", Integer.MAX_VALUE);
+            info = new TestWholeInfo("sheet页为空", Integer.MAX_VALUE, "");
         } else if(getCurrentIndex() >= sheet.getRows()) {
-            info = new TestNlpResultInfo("已超过最大值", Integer.MAX_VALUE);
+            info = new TestWholeInfo("已超过最大值", Integer.MAX_VALUE, "");
         } else {
             Cell[] cells = sheet.getRow(currentIndex);
-            if (TextUtils.isEmpty(cells[0].getContents().trim())) {
-                info = new TestNlpResultInfo("该条无数据", Integer.MAX_VALUE);
+            String data = cells[0].getContents().trim();
+            String pcmName = cells[1].getContents().trim();
+
+            if (TextUtils.isEmpty(data) || TextUtils.isEmpty(pcmName)) {
+                info = new TestWholeInfo("该条无数据", Integer.MAX_VALUE, "");
             } else {
-                String data = cells[0].getContents().trim();
-                info = new TestNlpResultInfo(data, currentIndex);
+                info = new TestWholeInfo(data, currentIndex, pcmName);
             }
 
         }
 
-        EventBus.getDefault().post(info);
+        return info;
     }
 
-    private static final String KEY_CURRENT_INDEX = "key_current_index";
+    private static final String KEY_CURRENT_INDEX = "key_whole_current_index";
     public static int getCurrentIndex() {
         return SharedPreferenceUtils.getInstance(TestModeApplication.getContext()).get(KEY_CURRENT_INDEX, 1);
     }

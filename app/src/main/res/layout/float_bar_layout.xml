@@ -30,7 +30,8 @@
         android:layout_toStartOf="@id/float_close_ibtn"
         android:background="@null"
         android:scaleType="fitXY"
-        android:src="@drawable/icon_refresh" />
+        android:src="@drawable/icon_refresh"
+        android:visibility="invisible"/>
 
     <ImageButton
         android:id="@+id/float_show_ibtn"
@@ -40,5 +41,6 @@
         android:layout_toStartOf="@id/float_refresh_ibtn"
         android:background="@null"
         android:scaleType="fitXY"
-        android:src="@drawable/icon_visible" />
+        android:src="@drawable/icon_visible"
+        android:visibility="invisible"/>
 </RelativeLayout>

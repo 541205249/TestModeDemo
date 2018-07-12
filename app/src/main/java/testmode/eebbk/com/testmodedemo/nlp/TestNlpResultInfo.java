@@ -18,7 +18,7 @@ public class TestNlpResultInfo {
     @Override
     public String toString() {
         return "TestNlpResultInfo{" +
-                "data='" + data + '\'' +
+                "txt='" + data + '\'' +
                 ",index='" + data + '\'' +
                 '}';
     }

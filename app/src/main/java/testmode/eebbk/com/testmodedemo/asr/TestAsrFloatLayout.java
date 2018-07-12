@@ -1,4 +1,4 @@
-package testmode.eebbk.com.testmodedemo.target.window.layout;
+package testmode.eebbk.com.testmodedemo.asr;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,26 +9,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import testmode.eebbk.com.testmodedemo.R;
-import testmode.eebbk.com.testmodedemo.nlp.NlpAndResultActivity;
+import testmode.eebbk.com.testmodedemo.asr.AsrExcelUtil;
+import testmode.eebbk.com.testmodedemo.asr.AsrFileUtils;
 import testmode.eebbk.com.testmodedemo.nlp.NlpAndResultExcelUtil;
 import testmode.eebbk.com.testmodedemo.target.window.FloatWindowController;
+import testmode.eebbk.com.testmodedemo.target.window.layout.FloatLayout;
 import testmode.eebbk.com.testmodedemo.util.BroadCastUtils;
 
+import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.ACTION_TEST_ASR;
 import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.ACTION_TEST_NLP;
-import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.RECEIVE_ACTION_NLP_RESULT;
+import static testmode.eebbk.com.testmodedemo.util.BroadCastUtils.RECEIVE_ACTION_ASR_RESULT;
 
-/**
- * @author LiXiaoFeng
- * @date 2018/4/18
- */
-public class TestNlpAndResultFloatLayout extends FloatLayout {
+public class TestAsrFloatLayout extends FloatLayout {
     private final WindowManager mWindowManager;
     private float mTouchStartX;
     private float mTouchStartY;
@@ -36,15 +32,17 @@ public class TestNlpAndResultFloatLayout extends FloatLayout {
     private ImageButton mShowIbtn;
     private TextView mLogTv;
     private boolean isVisible, isStarted;
-    private String mNlpResult, mTarget;
+    private String mAsrResult, mResult;
+    private int mCurrentIndex = 1;
+    private Context mContext;
 
-
-    public TestNlpAndResultFloatLayout(Context context) {
+    public TestAsrFloatLayout(Context context) {
         this(context, null);
     }
 
-    public TestNlpAndResultFloatLayout(Context context, AttributeSet attrs) {
+    public TestAsrFloatLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         initView(context);
@@ -53,12 +51,12 @@ public class TestNlpAndResultFloatLayout extends FloatLayout {
 
     private void registerTestReceiver(Context context) {
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.eebbk.askhomework.send.nlp_result.action");
-        context.getApplicationContext().registerReceiver(new NlpResultReceiver(), filter);
+        filter.addAction(RECEIVE_ACTION_ASR_RESULT);
+        context.getApplicationContext().registerReceiver(new AsrResultReceiver(), filter);
     }
 
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.test_nlp_result_float_window_layout, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.test_asr_float_window_layout, this);
         mMoveIbtn = view.findViewById(R.id.float_move_ibtn);
         mShowIbtn = view.findViewById(R.id.float_show_ibtn);
         ImageButton mCloseIbtn = view.findViewById(R.id.float_close_ibtn);
@@ -75,49 +73,39 @@ public class TestNlpAndResultFloatLayout extends FloatLayout {
             FloatWindowController.getInstance().close();
         });
 
-        view.findViewById(R.id.btn_reset).setOnClickListener(v -> NlpAndResultExcelUtil.updateCurrentIndex(1));
-
         view.findViewById(R.id.btn_start).setOnClickListener(v -> {
             if (!isStarted) {
-                BroadCastUtils.sendTestNlpBroadcast(context, ACTION_TEST_NLP);
+                BroadCastUtils.registerBroadcast(context, ACTION_TEST_NLP);
                 isStarted = true;
             }
-            int currentIndex = Integer.parseInt(NlpAndResultActivity.mQuestionIndexEt.getText().toString().trim());
-            NlpAndResultExcelUtil.updateCurrentIndex(currentIndex);
-            next();
+            sendOneFile();
         });
 
-        String[] reasonArr = new String[]{"正确", "错误", "无结果", "未知"};
-        GridView listView = view.findViewById(R.id.lv_reason);
-        ListAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, reasonArr);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            recordOne(reasonArr[position]);
-        });
     }
 
-    private void next() {
-        try {
-            NlpAndResultExcelUtil.getNlpAndResultData(getContext().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void sendOneFile() {
+        String pcmPath = AsrFileUtils.getPcmPath(mCurrentIndex);
+
+        Intent intent = new Intent(ACTION_TEST_ASR);
+        intent.putExtra("pcm_path", pcmPath);
+        mContext.getApplicationContext().sendBroadcast(intent);
     }
 
     private void recordOne(String result) {
-        NlpAndResultExcelUtil.updateNlpAndResultData(result, mTarget, mNlpResult);
-        next();
+        AsrExcelUtil.updateNlpAndResultData(result, "", mAsrResult);
         mLogTv.setText("当前为第" + NlpAndResultExcelUtil.getCurrentIndex() + "题");
+
+        mCurrentIndex++;
+        sendOneFile();
     }
 
-    class NlpResultReceiver extends BroadcastReceiver {
+    class AsrResultReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (RECEIVE_ACTION_NLP_RESULT.equals(intent.getAction())) {
-                mNlpResult = intent.getStringExtra("msg");
-                mTarget = intent.getStringExtra("target");
-                mLogTv.setText("当前为第" + NlpAndResultExcelUtil.getCurrentIndex() + "题," + mTarget);
+            if (RECEIVE_ACTION_ASR_RESULT.equals(intent.getAction())) {
+                mAsrResult = intent.getStringExtra("result");
+                mLogTv.setText("当前为第" + NlpAndResultExcelUtil.getCurrentIndex() + "个," + mAsrResult);
             }
         }
     }
